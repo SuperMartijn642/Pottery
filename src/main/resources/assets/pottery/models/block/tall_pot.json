@@ -1,0 +1,86 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"particle": "pottery:tall_pot/tall_pot_blank",
+		"base": "pottery:tall_pot/tall_pot_blank",
+		"pattern": "pottery:dummy_pattern",
+		"side": "pottery:tall_pot/tall_pot_blank_side"
+	},
+	"elements": [
+		{
+			"from": [5, 0, 5],
+			"to": [11, 1, 11],
+			"faces": {
+				"north": {"uv": [12, 7, 15, 7.5], "texture": "#base"},
+				"east": {"uv": [12, 7.5, 15, 8], "texture": "#base"},
+				"south": {"uv": [11, 12, 14, 12.5], "texture": "#base"},
+				"west": {"uv": [11, 12.5, 14, 13], "texture": "#base"},
+				"down": {"uv": [14, 8, 11, 11], "texture": "#base"}
+			}
+		},
+		{
+			"from": [6, 15, 6],
+			"to": [10, 17, 10],
+			"faces": {
+				"north": {"uv": [12, 3, 14, 4], "texture": "#base"},
+				"east": {"uv": [12, 4, 14, 5], "texture": "#base"},
+				"south": {"uv": [12, 5, 14, 6], "texture": "#base"},
+				"west": {"uv": [12, 6, 14, 7], "texture": "#base"}
+			}
+		},
+		{
+			"from": [4, 1, 4],
+			"to": [12, 15, 12],
+			"faces": {
+				"north": {"uv": [4, 1, 12, 15], "texture": "#side"},
+				"east": {"uv": [4, 1, 12, 15], "texture": "#side"},
+				"south": {"uv": [4, 1, 12, 15], "texture": "#side"},
+				"west": {"uv": [4, 1, 12, 15], "texture": "#side"},
+				"up": {"uv": [12, 4, 8, 0], "texture": "#base"},
+				"down": {"uv": [12, 4, 8, 8], "texture": "#base"}
+			}
+		},
+		{
+			"from": [5, 17, 5],
+			"to": [11, 19, 11],
+			"faces": {
+				"north": {"uv": [11, 11, 14, 12], "texture": "#base"},
+				"east": {"uv": [12, 0, 15, 1], "texture": "#base"},
+				"south": {"uv": [12, 1, 15, 2], "texture": "#base"},
+				"west": {"uv": [12, 2, 15, 3], "texture": "#base"},
+				"up": {"uv": [11, 11, 8, 8], "texture": "#base"},
+				"down": {"uv": [11, 11, 8, 14], "texture": "#base"}
+			}
+		},
+		{
+			"from": [5, 5.5, 3.9],
+			"to": [11, 10.5, 3.9],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [3.9, 5.5, 5],
+			"to": [3.9, 10.5, 11],
+			"faces": {
+				"west": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [5, 5.5, 12.1],
+			"to": [11, 10.5, 12.1],
+			"faces": {
+				"south": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [12.1, 5.5, 5],
+			"to": [12.1, 10.5, 11],
+			"faces": {
+				"east": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		}
+	]
+}

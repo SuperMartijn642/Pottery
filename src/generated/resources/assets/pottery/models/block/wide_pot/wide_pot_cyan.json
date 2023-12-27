@@ -1,0 +1,8 @@
+{
+  "parent": "pottery:block/wide_pot",
+  "textures": {
+    "base": "pottery:wide_pot/wide_pot_cyan",
+    "side": "pottery:wide_pot/wide_pot_cyan_side",
+    "particle": "#base"
+  }
+}

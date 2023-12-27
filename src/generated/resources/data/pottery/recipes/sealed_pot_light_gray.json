@@ -1,0 +1,39 @@
+{
+  "type": "pottery:pot",
+  "sherds": [
+    8,
+    6,
+    5,
+    3
+  ],
+  "dye_ingredient": {
+    "item": "minecraft:light_gray_dye"
+  },
+  "recipe": {
+    "show_notification": true,
+    "pattern": [
+      " P ",
+      "# #",
+      "#B#"
+    ],
+    "key": {
+      "P": [
+        {
+          "item": "minecraft:stone_pressure_plate"
+        },
+        {
+          "item": "minecraft:polished_blackstone_pressure_plate"
+        }
+      ],
+      "B": {
+        "item": "minecraft:brick"
+      },
+      "#": {
+        "tag": "minecraft:decorated_pot_ingredients"
+      }
+    },
+    "result": {
+      "item": "pottery:sealed_pot_light_gray"
+    }
+  }
+}

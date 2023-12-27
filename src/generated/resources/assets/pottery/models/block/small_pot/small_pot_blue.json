@@ -1,0 +1,8 @@
+{
+  "parent": "pottery:block/small_pot",
+  "textures": {
+    "base": "pottery:small_pot/small_pot_blue",
+    "side": "pottery:small_pot/small_pot_blue_side",
+    "particle": "#base"
+  }
+}

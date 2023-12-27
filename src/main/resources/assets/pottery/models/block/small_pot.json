@@ -1,0 +1,64 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "minecraft:block/block",
+	"texture_size": [32, 32],
+	"textures": {
+		"particle": "pottery:small_pot/small_pot_blank",
+		"base": "pottery:small_pot/small_pot_blank",
+		"pattern": "pottery:dummy_pattern",
+		"side": "pottery:small_pot/small_pot_blank_side"
+	},
+	"elements": [
+		{
+			"from": [6, 9, 6],
+			"to": [10, 11, 10],
+			"faces": {
+				"north": {"uv": [0, 9, 2, 10], "texture": "#base"},
+				"east": {"uv": [2, 9, 4, 10], "texture": "#base"},
+				"south": {"uv": [4, 9, 6, 10], "texture": "#base"},
+				"west": {"uv": [6, 9, 8, 10], "texture": "#base"},
+				"up": {"uv": [10, 10, 8, 8], "texture": "#base"}
+			}
+		},
+		{
+			"from": [4, 0, 4],
+			"to": [12, 9, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 12, 13], "texture": "#side"},
+				"east": {"uv": [4, 4, 12, 13], "texture": "#side"},
+				"south": {"uv": [4, 4, 12, 13], "texture": "#side"},
+				"west": {"uv": [4, 4, 12, 13], "texture": "#side"},
+				"up": {"uv": [12, 4, 8, 0], "texture": "#base"},
+				"down": {"uv": [12, 4, 8, 8], "texture": "#base"}
+			}
+		},
+		{
+			"from": [3.9, 2.5, 5.6],
+			"to": [3.9, 6.5, 10.4],
+			"faces": {
+				"west": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [5.6, 2.5, 12.1],
+			"to": [10.4, 6.5, 12.1],
+			"faces": {
+				"south": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [12.1, 2.5, 5.6],
+			"to": [12.1, 6.5, 10.4],
+			"faces": {
+				"east": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		},
+		{
+			"from": [5.6, 2.5, 3.9],
+			"to": [10.4, 6.5, 3.9],
+			"faces": {
+				"north": {"uv": [2, 4, 14, 13], "texture": "#pattern"}
+			}
+		}
+	]
+}

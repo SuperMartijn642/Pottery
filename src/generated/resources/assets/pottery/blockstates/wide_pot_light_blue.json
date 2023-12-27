@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pottery:block/wide_pot/wide_pot_light_blue",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "pottery:block/wide_pot/wide_pot_light_blue"
+    },
+    "facing=west": {
+      "model": "pottery:block/wide_pot/wide_pot_light_blue",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "pottery:block/wide_pot/wide_pot_light_blue",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,2504 @@
+{
+  "sources": [
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_cyan_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blank_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_green_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_lime_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_pink_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_magenta_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_purple_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_white_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_purple_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_purple_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_black_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_red_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_yellow_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_white_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_red_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_magenta_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_black_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_brown_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blank_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_pink_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_black_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_white_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_orange_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_pink_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_brown_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_yellow_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_magenta_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_magenta_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_purple_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_yellow_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blank_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_white_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_brown_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_pink_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blank_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_lime_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_green_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_cyan_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_orange_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_orange_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_green_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_lime_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_brown_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_white_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_yellow_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_lime_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_purple_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_magenta_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_cyan_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_pink_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_brown_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_green_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_yellow_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_orange_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_red_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/snort_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_lime_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blank_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/magenta/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/mourner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_cyan_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_orange_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_gray_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_black_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/howl_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_black_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/black/heartbreak_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_red_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/white/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/yellow/arms_up_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/heart_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_cyan_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/blue/decorated_pot_base"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/pink/miner_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/cyan/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/purple/archer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_red_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/burn_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_green_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/plenty_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/red/explorer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/decorated_pot_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/danger_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/lime/friend_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_gray/brewer_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/green/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/orange/angler_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/gray/skull_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/blade_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/brown/shelter_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/prize_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_blue_side_decorated"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:patterns/light_blue/sheaf_pottery_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_white_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_orange_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_magenta"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_yellow_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_cyan_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_pink_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_magenta"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blank_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blank_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_purple_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_pink_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_green_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_brown_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_black_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_magenta_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_yellow_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_magenta_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blank_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_yellow_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_pink_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_red_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_magenta_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blank_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_red_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_magenta_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_lime_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_purple_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_brown_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_orange_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_pink_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_cyan_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_white_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_red_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_brown_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_cyan_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_lime_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_cyan_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_light_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_black_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_purple_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_cyan_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_orange_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_magenta"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_brown_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_magenta"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_purple_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_light_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_green_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_white_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_brown"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_lime_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_green"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_white_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_red_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_black_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_light_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_yellow_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_blue_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_purple_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_lime_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_green_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_orange_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_pink_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_red_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_lime"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:default_pot/default_pot_cyan"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_lime_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_light_gray_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_yellow_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_magenta_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_pink"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_gray"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_white_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_magenta"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_brown_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:dummy_pattern"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_blank"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_black_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_green_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:wide_pot/wide_pot_blank_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_white"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_orange"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_black"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_black_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_purple"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_blue"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_green_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:sealed_pot/sealed_pot_yellow"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:tall_pot/tall_pot_orange_side"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:base_pot/base_pot_red"
+    },
+    {
+      "type": "minecraft:single",
+      "resource": "pottery:small_pot/small_pot_magenta"
+    }
+  ]
+}

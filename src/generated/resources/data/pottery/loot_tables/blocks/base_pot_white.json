@@ -1,0 +1,60 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "children": [
+            {
+              "conditions": [
+                {
+                  "predicate": {
+                    "tag": "minecraft:breaks_decorated_pots"
+                  },
+                  "condition": "minecraft:match_tool"
+                },
+                {
+                  "term": {
+                    "predicate": {
+                      "enchantments": [
+                        {
+                          "enchantment": "minecraft:silk_touch",
+                          "levels": {
+                            "min": 1
+                          }
+                        }
+                      ]
+                    },
+                    "condition": "minecraft:match_tool"
+                  },
+                  "condition": "minecraft:inverted"
+                }
+              ],
+              "name": "minecraft:sherds",
+              "type": "minecraft:dynamic"
+            },
+            {
+              "functions": [
+                {
+                  "source": "block_entity",
+                  "ops": [
+                    {
+                      "source": "sherds",
+                      "target": "BlockEntityTag.sherds",
+                      "op": "replace"
+                    }
+                  ],
+                  "function": "minecraft:copy_nbt"
+                }
+              ],
+              "name": "pottery:base_pot_white",
+              "type": "minecraft:item"
+            }
+          ],
+          "type": "minecraft:alternatives"
+        }
+      ]
+    }
+  ]
+}

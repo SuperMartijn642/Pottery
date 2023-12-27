@@ -1,0 +1,8 @@
+{
+  "parent": "pottery:block/tall_pot",
+  "textures": {
+    "base": "pottery:tall_pot/tall_pot_lime",
+    "side": "pottery:tall_pot/tall_pot_lime_side",
+    "particle": "#base"
+  }
+}

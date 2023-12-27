@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pottery:block/tall_pot/tall_pot_gray",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "pottery:block/tall_pot/tall_pot_gray"
+    },
+    "facing=west": {
+      "model": "pottery:block/tall_pot/tall_pot_gray",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "pottery:block/tall_pot/tall_pot_gray",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "pottery:block/sealed_pot",
+  "textures": {
+    "base": "pottery:sealed_pot/sealed_pot_light_gray",
+    "side": "pottery:sealed_pot/sealed_pot_light_gray_side",
+    "particle": "#base"
+  }
+}

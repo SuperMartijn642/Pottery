@@ -1,0 +1,28 @@
+{
+  "type": "pottery:pot",
+  "sherds": [
+    5,
+    3,
+    2,
+    0
+  ],
+  "recipe": {
+    "show_notification": true,
+    "pattern": [
+      "# #",
+      "# #",
+      " B "
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:brick"
+      },
+      "#": {
+        "tag": "minecraft:decorated_pot_ingredients"
+      }
+    },
+    "result": {
+      "item": "pottery:tall_pot_blank"
+    }
+  }
+}

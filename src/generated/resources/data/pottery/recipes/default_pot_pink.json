@@ -1,0 +1,28 @@
+{
+  "type": "pottery:pot",
+  "sherds": [
+    7,
+    3,
+    5,
+    1
+  ],
+  "dye_ingredient": {
+    "item": "minecraft:pink_dye"
+  },
+  "recipe": {
+    "show_notification": true,
+    "pattern": [
+      " # ",
+      "# #",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "tag": "minecraft:decorated_pot_ingredients"
+      }
+    },
+    "result": {
+      "item": "pottery:default_pot_pink"
+    }
+  }
+}

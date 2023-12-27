@@ -1,0 +1,25 @@
+{
+  "type": "pottery:pot",
+  "sherds": [
+    7,
+    3,
+    5,
+    1
+  ],
+  "recipe": {
+    "show_notification": true,
+    "pattern": [
+      " # ",
+      "# #",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "tag": "minecraft:decorated_pot_ingredients"
+      }
+    },
+    "result": {
+      "item": "minecraft:decorated_pot"
+    }
+  }
+}

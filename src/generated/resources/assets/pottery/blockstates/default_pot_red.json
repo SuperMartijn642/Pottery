@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "pottery:block/default_pot/default_pot_red",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "pottery:block/default_pot/default_pot_red"
+    },
+    "facing=west": {
+      "model": "pottery:block/default_pot/default_pot_red",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "pottery:block/default_pot/default_pot_red",
+      "y": 270
+    }
+  }
+}

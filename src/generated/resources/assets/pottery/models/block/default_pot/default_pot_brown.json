@@ -1,0 +1,7 @@
+{
+  "parent": "pottery:block/default_pot",
+  "textures": {
+    "base": "pottery:default_pot/default_pot_brown",
+    "particle": "#base"
+  }
+}

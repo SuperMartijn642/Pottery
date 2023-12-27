@@ -1,0 +1,27 @@
+{
+  "type": "pottery:pot",
+  "sherds": [
+    4,
+    0,
+    2,
+    1
+  ],
+  "dye_ingredient": {
+    "item": "minecraft:purple_dye"
+  },
+  "recipe": {
+    "show_notification": true,
+    "pattern": [
+      "###",
+      " # "
+    ],
+    "key": {
+      "#": {
+        "tag": "minecraft:decorated_pot_ingredients"
+      }
+    },
+    "result": {
+      "item": "pottery:base_pot_purple"
+    }
+  }
+}
