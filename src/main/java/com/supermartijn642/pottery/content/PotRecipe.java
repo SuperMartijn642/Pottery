@@ -3,7 +3,6 @@ package com.supermartijn642.pottery.content;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -11,10 +10,7 @@ import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 
@@ -33,8 +29,8 @@ public class PotRecipe extends ShapedRecipe {
     private final Ingredient dyeIngredient;
     private final int[] sherdIndices;
 
-    public PotRecipe(String group, CraftingBookCategory category, int width, int height, NonNullList<Ingredient> ingredients, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
-        super(group, category, width, height, ingredients, output, showNotification);
+    public PotRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
+        super(group, category, pattern, output, showNotification);
         this.dyeIngredient = dyeIngredient;
         this.sherdIndices = sherdIndices;
     }
@@ -128,9 +124,7 @@ public class PotRecipe extends ShapedRecipe {
         ).apply(instance, (shapedRecipe, dyeIngredient, sherdIndices) -> new PotRecipe(
             shapedRecipe.getGroup(),
             shapedRecipe.category(),
-            shapedRecipe.getWidth(),
-            shapedRecipe.getHeight(),
-            shapedRecipe.getIngredients(),
+            shapedRecipe.pattern,
             shapedRecipe.getResultItem(null),
             shapedRecipe.showNotification(),
             dyeIngredient.orElse(null),
@@ -152,9 +146,7 @@ public class PotRecipe extends ShapedRecipe {
             return new PotRecipe(
                 shapedRecipe.getGroup(),
                 shapedRecipe.category(),
-                shapedRecipe.getWidth(),
-                shapedRecipe.getHeight(),
-                shapedRecipe.getIngredients(),
+                shapedRecipe.pattern,
                 shapedRecipe.getResultItem(null),
                 shapedRecipe.showNotification(),
                 dyeIngredient,
