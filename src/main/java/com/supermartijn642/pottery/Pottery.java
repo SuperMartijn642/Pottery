@@ -9,8 +9,7 @@ import com.supermartijn642.pottery.content.PotEventHandlers;
 import com.supermartijn642.pottery.content.PotRecipe;
 import com.supermartijn642.pottery.content.PotType;
 import com.supermartijn642.pottery.generators.*;
-import net.minecraft.world.item.Items;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.fml.common.Mod;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
