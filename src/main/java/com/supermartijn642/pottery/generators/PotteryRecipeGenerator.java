@@ -102,14 +102,14 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
             sherds.add(recipe.sherdIndices[3]);
             json.add("sherds", sherds);
             if(recipe.dyeIngredient != null)
-                json.add("dye_ingredient", recipe.dyeIngredient.toJson(false));
+                json.add("dye_ingredient", recipe.dyeIngredient.toJson());
             JsonObject recipeJson = new JsonObject();
             recipeJson.addProperty("show_notification", true);
             JsonArray pattern = new JsonArray();
             Arrays.stream(recipe.pattern).forEach(pattern::add);
             recipeJson.add("pattern", pattern);
             JsonObject keys = new JsonObject();
-            recipe.inputs.forEach((key, ingredient) -> keys.add(key.toString(), ingredient.toJson(false)));
+            recipe.inputs.forEach((key, ingredient) -> keys.add(key.toString(), ingredient.toJson()));
             recipeJson.add("key", keys);
             JsonObject result = new JsonObject();
             result.addProperty("item", Registries.ITEMS.getIdentifier(recipe.output).toString());

@@ -18,6 +18,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.DecoratedPotRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -108,7 +109,7 @@ public class PotEventHandlers {
                 if(!level.isClientSide){
                     // Update the decorations
                     DecoratedPotBlockEntity.Decorations newDecorations = DecorationUtils.setDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide, stack.getItem());
-                    entity.setFromItem(DecoratedPotBlockEntity.createDecoratedPotItem(newDecorations));
+                    entity.setFromItem(DecoratedPotRecipe.createDecoratedPotItem(newDecorations));
                     entity.setChanged();
                     level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
                     if(!player.isCreative()){
@@ -134,7 +135,7 @@ public class PotEventHandlers {
                 if(stored.isEmpty())
                     stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
                 else
-                    stored.grow(stack.split(1).getCount());
+                    stored.grow(player.isCreative() ? 1 : stack.split(1).getCount());
                 ((Container)entity).setItem(0, stored);
                 fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
                 level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
