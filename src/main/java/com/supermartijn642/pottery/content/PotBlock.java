@@ -159,7 +159,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
                 if(stored.isEmpty())
                     stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
                 else
-                    stored.grow(1);
+                    stored.grow(player.isCreative() ? 1 : stack.split(1).getCount());
                 entity.setTheItem(stored);
                 fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
                 level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
