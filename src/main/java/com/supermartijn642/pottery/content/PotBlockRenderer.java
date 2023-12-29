@@ -4,13 +4,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.data.ModelData;
 
 /**
  * Created 27/12/2023 by SuperMartijn642
@@ -48,7 +50,10 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         BlockRenderDispatcher blockRenderer = ClientUtils.getBlockRenderer();
         BlockState state = entity.getBlockState();
         BakedModel model = blockRenderer.getBlockModel(state);
-        blockRenderer.getModelRenderer().tesselateBlock(entity.getLevel(), model, state, entity.getBlockPos(), poseStack, bufferSource.getBuffer(ItemBlockRenderTypes.getChunkRenderType(state)), cullFaces, entity.getLevel().random, combinedLight, combinedOverlay);
+        ModelData modelData = model.getModelData(entity.getLevel(), entity.getBlockPos(), state, ModelData.EMPTY);
+        Level level = entity.getLevel();
+        for(RenderType renderType : model.getRenderTypes(state, level.random, modelData))
+            blockRenderer.getModelRenderer().tesselateBlock(level, model, state, entity.getBlockPos(), poseStack, bufferSource.getBuffer(renderType), cullFaces, level.random, combinedLight, combinedOverlay, modelData, renderType);
 
         poseStack.popPose();
     }

@@ -1,5 +1,6 @@
 package com.supermartijn642.pottery;
 
+import com.supermartijn642.core.CommonUtils;
 import com.supermartijn642.core.item.CreativeItemGroup;
 import com.supermartijn642.core.registry.GeneratorRegistrationHandler;
 import com.supermartijn642.core.registry.RegistrationHandler;
@@ -8,13 +9,14 @@ import com.supermartijn642.pottery.content.PotEventHandlers;
 import com.supermartijn642.pottery.content.PotRecipe;
 import com.supermartijn642.pottery.content.PotType;
 import com.supermartijn642.pottery.generators.*;
-import net.fabricmc.api.ModInitializer;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.fml.common.Mod;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
-public class Pottery implements ModInitializer {
+@Mod(Pottery.MODID)
+public class Pottery {
 
     public static final String MODID = "pottery";
 
@@ -27,12 +29,13 @@ public class Pottery implements ModInitializer {
             }
         });
 
-    @Override
-    public void onInitialize(){
+    public Pottery(){
         PotEventHandlers.registerListeners();
 
         PotteryConfig.init();
         register();
+        if(CommonUtils.getEnvironmentSide().isClient())
+            PotteryClient.register();
         registerGenerators();
 
         // Adjust vanilla decorated pot's stack size to 64

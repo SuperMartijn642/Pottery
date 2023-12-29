@@ -1,7 +1,6 @@
 package com.supermartijn642.pottery.content;
 
 import com.supermartijn642.pottery.extensions.PotteryDecoratedPotBlockEntity;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -28,6 +27,10 @@ import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+
+import java.util.function.Consumer;
 
 /**
  * Created 01/12/2023 by SuperMartijn642
@@ -35,7 +38,13 @@ import net.minecraft.world.phys.BlockHitResult;
 public class PotEventHandlers {
 
     public static void registerListeners(){
-        UseBlockCallback.EVENT.register(PotEventHandlers::onInteract);
+        MinecraftForge.EVENT_BUS.addListener((Consumer<PlayerInteractEvent.RightClickBlock>)event -> {
+            InteractionResult result = onInteract(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
+            if(result != InteractionResult.PASS){
+                event.setCanceled(true);
+                event.setCancellationResult(result);
+            }
+        });
     }
 
     private static InteractionResult onInteract(Player player, Level level, InteractionHand hand, BlockHitResult hitResult){

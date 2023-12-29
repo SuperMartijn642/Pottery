@@ -886,11 +886,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/pink/decorated_pot_base"
+      "resource": "pottery:patterns/pink/shelter_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/pink/shelter_pottery_pattern"
+      "resource": "pottery:patterns/pink/decorated_pot_base"
     },
     {
       "type": "minecraft:single",
@@ -1318,11 +1318,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/decorated_pot_side"
+      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
+      "resource": "pottery:patterns/lime/decorated_pot_side"
     },
     {
       "type": "minecraft:single",
@@ -1526,11 +1526,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/red/burn_pottery_pattern"
+      "resource": "pottery:patterns/red/howl_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/red/howl_pottery_pattern"
+      "resource": "pottery:patterns/red/burn_pottery_pattern"
     },
     {
       "type": "minecraft:single",

@@ -6,17 +6,15 @@ import com.supermartijn642.pottery.content.PotBakedModel;
 import com.supermartijn642.pottery.content.PotBlockRenderer;
 import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
-import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
-public class PotteryClient implements ClientModInitializer {
+public class PotteryClient {
 
-    @Override
-    public void onInitializeClient(){
+    public static void register(){
         ClientRegistrationHandler handler = ClientRegistrationHandler.get(Pottery.MODID);
         // Register block entity renderers
         for(PotType type : PotType.values())

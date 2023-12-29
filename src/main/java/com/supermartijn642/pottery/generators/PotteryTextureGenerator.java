@@ -7,11 +7,11 @@ import com.supermartijn642.core.util.Triple;
 import com.supermartijn642.pottery.Pottery;
 import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.forgespi.language.IModFileInfo;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -24,7 +24,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
@@ -82,13 +81,13 @@ public class PotteryTextureGenerator extends ResourceGenerator {
     }
 
     private BufferedImage readImage(ResourceLocation file){
-        Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(file.getNamespace());
-        if(modContainer.isEmpty())
+        IModFileInfo modFile = ModList.get().getModFileById(file.getNamespace());
+        if(modFile == null)
             throw new RuntimeException("Could not find mod for namespace '" + file.getNamespace() + "' for texture '" + file + "'!");
-        Optional<Path> filePath = modContainer.get().findPath("assets/" + file.getNamespace() + "/textures/" + file.getPath() + ".png");
-        if(filePath.isEmpty())
+        Path filePath = modFile.getFile().findResource("assets", file.getNamespace(), "textures", file.getPath() + ".png");
+        if(filePath == null)
             throw new RuntimeException("Could not find file 'assets/" + file.getNamespace() + "/textures/" + file.getPath() + ".png' from mod '" + file.getNamespace() + "'!");
-        try(InputStream stream = Files.newInputStream(filePath.get())){
+        try(InputStream stream = Files.newInputStream(filePath)){
             BufferedImage image = ImageIO.read(stream);
             // Make sure we have an image with the full RGB color model
             BufferedImage redrawn = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);

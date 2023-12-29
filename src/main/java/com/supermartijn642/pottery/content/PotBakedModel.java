@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.TextureAtlases;
 import com.supermartijn642.pottery.Pottery;
-import net.fabricmc.fabric.api.renderer.v1.render.RenderContext;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
@@ -27,78 +27,66 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.model.IDynamicBakedModel;
+import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.data.ModelProperty;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
-public class PotBakedModel implements BakedModel {
+public class PotBakedModel implements BakedModel, IDynamicBakedModel {
 
     private static final ResourceLocation DUMMY_PATTERN_SPRITE = new ResourceLocation(Pottery.MODID, "dummy_pattern");
     private static final int BLOCK_VERTEX_DATA_UV_OFFSET = findUVOffset(DefaultVertexFormat.BLOCK);
     private static final PotData DEFAULT_POT_DATA = new PotData(PotType.DEFAULT, PotColor.BLANK, Direction.NORTH, DecoratedPotBlockEntity.Decorations.EMPTY);
-
-    private static final ThreadLocal<PotData> MODEL_DATA = new ThreadLocal<>();
+    private static final ModelProperty<PotData> MODEL_PROPERTY = new ModelProperty<>();
 
     private final BakedModel original;
+    private PotData itemModelData;
 
     public PotBakedModel(BakedModel original){
         this.original = original;
     }
 
     @Override
-    public boolean isVanillaAdapter(){
-        return false;
-    }
-
-    @Override
-    public void emitBlockQuads(BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, RenderContext context){
+    public @NotNull ModelData getModelData(@NotNull BlockAndTintGetter level, @NotNull BlockPos pos, @NotNull BlockState state, @NotNull ModelData modelData){
         BlockEntity entity;
-        if(!(state.getBlock() instanceof PotBlock) || !((entity = blockView.getBlockEntity(pos)) instanceof PotBlockEntity)){
-            BakedModel.super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-            return;
-        }
+        if(!(state.getBlock() instanceof PotBlock) || !((entity = level.getBlockEntity(pos)) instanceof PotBlockEntity))
+            return modelData;
 
         PotType type = ((PotBlock)state.getBlock()).getType();
         PotColor color = ((PotBlock)state.getBlock()).getColor();
         DecoratedPotBlockEntity.Decorations decorations = ((PotBlockEntity)entity).getDecorations();
         Direction facing = state.getValue(PotBlock.HORIZONTAL_FACING);
-        MODEL_DATA.set(new PotData(type, color, facing, decorations));
-        try{
-            BakedModel.super.emitBlockQuads(blockView, state, pos, randomSupplier, context);
-        }finally{
-            MODEL_DATA.set(null);
-        }
+        return ModelData.builder().with(MODEL_PROPERTY, new PotData(type, color, facing, decorations)).build();
     }
 
     @Override
-    public void emitItemQuads(ItemStack stack, Supplier<RandomSource> randomSupplier, RenderContext context){
+    public List<BakedModel> getRenderPasses(ItemStack stack, boolean fabulous){
         Block block = stack.getItem() instanceof BlockItem ? ((BlockItem)stack.getItem()).getBlock() : null;
-        if(block == null || !(block instanceof PotBlock)){
-            BakedModel.super.emitItemQuads(stack, randomSupplier, context);
-            return;
-        }
+        if(block == null || !(block instanceof PotBlock))
+            return List.of(this);
 
         PotType type = ((PotBlock)block).getType();
         PotColor color = ((PotBlock)block).getColor();
         DecoratedPotBlockEntity.Decorations decorations = DecoratedPotBlockEntity.Decorations.load(BlockItem.getBlockEntityData(stack));
-        MODEL_DATA.set(new PotData(type, color, Direction.SOUTH, decorations));
-        try{
-            BakedModel.super.emitItemQuads(stack, randomSupplier, context);
-        }finally{
-            MODEL_DATA.set(null);
-        }
+        this.itemModelData = new PotData(type, color, Direction.SOUTH, decorations);
+        return List.of(this);
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random){
-        PotData data = MODEL_DATA.get() == null ? DEFAULT_POT_DATA : MODEL_DATA.get();
+    public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource random, @NotNull ModelData modelData, @Nullable RenderType renderType){
+        PotData data = modelData.has(MODEL_PROPERTY) ? modelData.get(MODEL_PROPERTY) : DEFAULT_POT_DATA;
+        if(data == DEFAULT_POT_DATA && state == null && this.itemModelData != null)
+            data = this.itemModelData;
+        PotData finalData = data;
         return this.original.getQuads(state, side, random).stream()
-            .map(quad -> this.adjustQuad(quad, data))
+            .map(quad -> this.adjustQuad(quad, finalData))
             .toList();
     }
 
