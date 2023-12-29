@@ -134,7 +134,7 @@ public class PotEventHandlers {
                 if(stored.isEmpty())
                     stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
                 else
-                    stored.grow(stack.split(1).getCount());
+                    stored.grow(player.isCreative() ? 1 : stack.split(1).getCount());
                 ((Container)entity).setItem(0, stored);
                 fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
                 level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
