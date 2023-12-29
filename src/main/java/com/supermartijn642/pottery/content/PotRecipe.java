@@ -1,14 +1,12 @@
 package com.supermartijn642.pottery.content;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -21,6 +19,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 
 import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 /**
  * Created 01/12/2023 by SuperMartijn642
@@ -32,8 +33,8 @@ public class PotRecipe extends ShapedRecipe {
     private final Ingredient dyeIngredient;
     private final int[] sherdIndices;
 
-    public PotRecipe(ResourceLocation identifier, String group, CraftingBookCategory category, int width, int height, NonNullList<Ingredient> ingredients, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
-        super(identifier, group, category, width, height, ingredients, output, showNotification);
+    public PotRecipe(String group, CraftingBookCategory category, int width, int height, NonNullList<Ingredient> ingredients, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
+        super(group, category, width, height, ingredients, output, showNotification);
         this.dyeIngredient = dyeIngredient;
         this.sherdIndices = sherdIndices;
     }
@@ -119,43 +120,36 @@ public class PotRecipe extends ShapedRecipe {
 
     public static class Serializer implements RecipeSerializer<PotRecipe> {
 
+        private static final Function<Integer,DataResult<Integer>> GEQUAL_TO_ZERO = integer -> integer < 0 ? DataResult.error(() -> "Value '" + integer + "' is less than 0!") : DataResult.success(integer);
+        private static final Codec<PotRecipe> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            ShapedRecipe.Serializer.CODEC.fieldOf("recipe").forGetter(recipe -> null),
+            Ingredient.CODEC_NONEMPTY.optionalFieldOf("dye_ingredient").forGetter(recipe -> Optional.of(recipe.dyeIngredient)),
+            Codec.INT.flatXmap(GEQUAL_TO_ZERO, GEQUAL_TO_ZERO).listOf().fieldOf("sherds").forGetter(recipe -> IntStream.of(recipe.sherdIndices).boxed().toList())
+        ).apply(instance, (shapedRecipe, dyeIngredient, sherdIndices) -> new PotRecipe(
+            shapedRecipe.getGroup(),
+            shapedRecipe.category(),
+            shapedRecipe.getWidth(),
+            shapedRecipe.getHeight(),
+            shapedRecipe.getIngredients(),
+            shapedRecipe.getResultItem(null),
+            shapedRecipe.showNotification(),
+            dyeIngredient.orElse(null),
+            sherdIndices.stream().mapToInt(i -> i).toArray()
+        )));
+
         @Override
-        public PotRecipe fromJson(ResourceLocation identifier, JsonObject json){
-            if(!json.has("recipe") || !json.get("recipe").isJsonObject())
-                throw new JsonParseException("Missing object property 'recipe'!");
-            ShapedRecipe shapedRecipe = RecipeSerializer.SHAPED_RECIPE.fromJson(identifier, json.getAsJsonObject("recipe"));
-            Ingredient dyeIngredient = null;
-            if(json.has("dye_ingredient"))
-                dyeIngredient = Ingredient.fromJson(json.get("dye_ingredient"), false);
-            if(!json.has("sherds") || !json.get("sherds").isJsonArray())
-                throw new JsonParseException("Missing array property 'sherds'!");
-            JsonArray sherdsJson = json.getAsJsonArray("sherds");
-            if(sherdsJson.size() != 4)
-                throw new JsonParseException("Array 'sherds' must have 4 elements!");
-            int[] sherdIndices = sherdsJson.asList().stream().mapToInt(JsonElement::getAsInt).toArray();
-            return new PotRecipe(
-                identifier,
-                shapedRecipe.getGroup(),
-                shapedRecipe.category(),
-                shapedRecipe.getWidth(),
-                shapedRecipe.getHeight(),
-                shapedRecipe.getIngredients(),
-                shapedRecipe.getResultItem(null),
-                shapedRecipe.showNotification(),
-                dyeIngredient,
-                sherdIndices
-            );
+        public Codec<PotRecipe> codec(){
+            return CODEC;
         }
 
         @Override
-        public PotRecipe fromNetwork(ResourceLocation identifier, FriendlyByteBuf buffer){
-            ShapedRecipe shapedRecipe = RecipeSerializer.SHAPED_RECIPE.fromNetwork(identifier, buffer);
+        public PotRecipe fromNetwork(FriendlyByteBuf buffer){
+            ShapedRecipe shapedRecipe = RecipeSerializer.SHAPED_RECIPE.fromNetwork(buffer);
             Ingredient dyeIngredient = buffer.readBoolean() ? Ingredient.fromNetwork(buffer) : null;
             int[] sherdIndices = buffer.readVarIntArray(4);
             if(sherdIndices.length != 4)
                 throw new IllegalArgumentException();
             return new PotRecipe(
-                identifier,
                 shapedRecipe.getGroup(),
                 shapedRecipe.category(),
                 shapedRecipe.getWidth(),

@@ -23,7 +23,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.crafting.DecoratedPotRecipe;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -103,7 +102,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
                     level.setBlock(pos, newState, Block.UPDATE_ALL);
                     entity = level.getBlockEntity(pos);
                     if(entity instanceof DecoratedPotBlockEntity)
-                        ((DecoratedPotBlockEntity)entity).setFromItem(DecoratedPotRecipe.createDecoratedPotItem(decorations));
+                        ((DecoratedPotBlockEntity)entity).setFromItem(DecoratedPotBlockEntity.createDecoratedPotItem(decorations));
                 }else{
                     BlockState newState = this.type.getBlock(color).defaultBlockState()
                         .setValue(HORIZONTAL_FACING, state.getValue(HORIZONTAL_FACING))

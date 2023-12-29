@@ -562,11 +562,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/purple/angler_pottery_pattern"
+      "resource": "pottery:patterns/purple/prize_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/purple/prize_pottery_pattern"
+      "resource": "pottery:patterns/purple/angler_pottery_pattern"
     },
     {
       "type": "minecraft:single",
@@ -1318,11 +1318,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
+      "resource": "pottery:patterns/lime/decorated_pot_side"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/decorated_pot_side"
+      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
     },
     {
       "type": "minecraft:single",
@@ -1550,11 +1550,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/black/danger_pottery_pattern"
+      "resource": "pottery:patterns/black/friend_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/black/friend_pottery_pattern"
+      "resource": "pottery:patterns/black/danger_pottery_pattern"
     },
     {
       "type": "minecraft:single",

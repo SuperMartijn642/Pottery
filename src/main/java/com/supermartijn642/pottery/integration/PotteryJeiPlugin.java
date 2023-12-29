@@ -12,11 +12,14 @@ import mezz.jei.api.registration.IVanillaCategoryExtensionRegistration;
 import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -32,13 +35,13 @@ public class PotteryJeiPlugin implements IModPlugin {
 
     @Override
     public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration){
-        registration.getCraftingCategory().addCategoryExtension(PotRecipe.class, recipe -> new ICraftingCategoryExtension() {
-
+        registration.getCraftingCategory().addExtension(PotRecipe.class, new ICraftingCategoryExtension<PotRecipe>() {
             @Override
-            public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses){
+            public void setRecipe(RecipeHolder<PotRecipe> recipeHolder, IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses){
+                PotRecipe recipe = recipeHolder.value();
                 // Inputs
-                int width = this.getWidth();
-                int height = this.getHeight();
+                int width = this.getWidth(recipeHolder);
+                int height = this.getHeight(recipeHolder);
                 List<List<ItemStack>> inputs = recipe.getIngredients().stream()
                     .map(Ingredient::getItems)
                     .map(Arrays::asList)
@@ -59,18 +62,18 @@ public class PotteryJeiPlugin implements IModPlugin {
             }
 
             @Override
-            public ResourceLocation getRegistryName(){
-                return recipe.getId();
+            public Optional<ResourceLocation> getRegistryName(RecipeHolder<PotRecipe> recipeHolder){
+                return Optional.of(recipeHolder.id());
             }
 
             @Override
-            public int getWidth(){
-                return recipe.getWidth();
+            public int getWidth(RecipeHolder<PotRecipe> recipeHolder){
+                return recipeHolder.value().getWidth();
             }
 
             @Override
-            public int getHeight(){
-                return recipe.getHeight();
+            public int getHeight(RecipeHolder<PotRecipe> recipeHolder){
+                return recipeHolder.value().getHeight();
             }
         });
     }

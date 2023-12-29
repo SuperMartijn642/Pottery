@@ -5,21 +5,17 @@
       "rolls": 1.0,
       "entries": [
         {
-          "type": "minecraft:alternatives",
           "children": [
             {
-              "type": "minecraft:dynamic",
               "conditions": [
                 {
-                  "condition": "minecraft:match_tool",
                   "predicate": {
                     "tag": "minecraft:breaks_decorated_pots"
-                  }
+                  },
+                  "condition": "minecraft:match_tool"
                 },
                 {
-                  "condition": "minecraft:inverted",
                   "term": {
-                    "condition": "minecraft:match_tool",
                     "predicate": {
                       "enchantments": [
                         {
@@ -29,17 +25,18 @@
                           }
                         }
                       ]
-                    }
-                  }
+                    },
+                    "condition": "minecraft:match_tool"
+                  },
+                  "condition": "minecraft:inverted"
                 }
               ],
-              "name": "minecraft:sherds"
+              "name": "minecraft:sherds",
+              "type": "minecraft:dynamic"
             },
             {
-              "type": "minecraft:item",
               "functions": [
                 {
-                  "function": "minecraft:copy_nbt",
                   "source": "block_entity",
                   "ops": [
                     {
@@ -47,12 +44,15 @@
                       "target": "BlockEntityTag.sherds",
                       "op": "replace"
                     }
-                  ]
+                  ],
+                  "function": "minecraft:copy_nbt"
                 }
               ],
-              "name": "pottery:default_pot_light_gray"
+              "name": "pottery:default_pot_light_gray",
+              "type": "minecraft:item"
             }
-          ]
+          ],
+          "type": "minecraft:alternatives"
         }
       ]
     }
