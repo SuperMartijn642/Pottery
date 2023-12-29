@@ -80,7 +80,7 @@ public enum PotType {
             if(this == DEFAULT && color == PotColor.BLANK)
                 continue;
             PotBlock block = this.blocks.get(color);
-            this.items.put(color, helper.register(this.getIdentifier(color), new BaseBlockItem(block, ItemProperties.create().group(Pottery.ITEM_GROUP).maxStackSize(1))));
+            this.items.put(color, helper.register(this.getIdentifier(color), new BaseBlockItem(block, ItemProperties.create().group(Pottery.ITEM_GROUP))));
         }
     }
 

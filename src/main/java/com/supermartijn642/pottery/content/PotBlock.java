@@ -7,12 +7,20 @@ import com.supermartijn642.core.block.EntityHoldingBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -27,12 +35,14 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -137,7 +147,31 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
                 return InteractionFeedback.SUCCESS;
             }
         }
-        return super.interact(state, level, pos, player, hand, hitSide, hitLocation);
+
+        // Storing items
+        if(level.getBlockEntity(pos) instanceof PotBlockEntity entity){
+            ItemStack stored = entity.getItem(0);
+            if(!stack.isEmpty() && (stored.isEmpty() || (ItemStack.isSameItemSameTags(stack, stored) && stored.getCount() < stored.getMaxStackSize()))){
+                entity.wobble(PotBlockEntity.WobbleStyle.POSITIVE);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                float fillPercentage;
+                if(stored.isEmpty())
+                    stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
+                else
+                    stored.grow(player.isCreative() ? 1 : stack.split(1).getCount());
+                entity.setItem(0, stored);
+                fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
+                level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
+                if(level instanceof ServerLevel)
+                    ((ServerLevel)level).sendParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 1.3, pos.getZ() + 0.5, 7, 0, 0, 0, 0);
+                entity.setChanged();
+            }else{
+                level.playSound(null, pos, SoundEvents.WAXED_SIGN_INTERACT_FAIL, SoundSource.BLOCKS, 1, 1);
+                entity.wobble(PotBlockEntity.WobbleStyle.NEGATIVE);
+            }
+        }
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+        return InteractionFeedback.SUCCESS;
     }
 
     @Nullable
@@ -147,6 +181,17 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
         return this.defaultBlockState()
             .setValue(HORIZONTAL_FACING, context.getHorizontalDirection())
             .setValue(WATERLOGGED, waterlogged);
+    }
+
+    @Override
+    public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean bl){
+        if(oldState.is(newState.getBlock()))
+            return;
+        if(level.getBlockEntity(pos) instanceof PotBlockEntity entity){
+            Containers.dropContents(level, pos, entity);
+            level.updateNeighbourForOutputSignal(pos, this);
+        }
+        super.onRemove(oldState, level, pos, newState, bl);
     }
 
     @Override
@@ -229,5 +274,36 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
         if(level.getBlockEntity(pos) instanceof PotBlockEntity entity)
             return entity.itemFromDecorations();
         return super.getCloneItemStack(level, pos, state);
+    }
+
+    @Override
+    public void onProjectileHit(Level level, BlockState state, BlockHitResult blockHitResult, Projectile projectile){
+        BlockPos pos = blockHitResult.getBlockPos();
+        if(!level.isClientSide && projectile.mayInteract(level, pos)){
+            level.setBlock(pos, state.setValue(CRACKED, true), 4);
+            level.destroyBlock(pos, true, projectile);
+        }
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state){
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos){
+        return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state){
+        return RenderShape.ENTITYBLOCK_ANIMATED;
+    }
+
+    @Override
+    public boolean triggerEvent(BlockState state, Level level, BlockPos pos, int identifier, int data){
+        BlockEntity entity;
+        return super.triggerEvent(state, level, pos, identifier, data)
+            || ((entity = level.getBlockEntity(pos)) != null && entity.triggerEvent(identifier, data));
     }
 }

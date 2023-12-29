@@ -34,6 +34,9 @@ public class Pottery implements ModInitializer {
         PotteryConfig.init();
         register();
         registerGenerators();
+
+        // Adjust vanilla decorated pot's stack size to 64
+        Items.DECORATED_POT.maxStackSize = 64;
     }
 
     private static void register(){

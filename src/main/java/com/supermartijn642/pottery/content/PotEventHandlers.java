@@ -1,9 +1,16 @@
 package com.supermartijn642.pottery.content;
 
+import com.supermartijn642.pottery.extensions.PotteryDecoratedPotBlockEntity;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -18,6 +25,7 @@ import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
 
 /**
@@ -115,6 +123,30 @@ public class PotEventHandlers {
                 return InteractionResult.SUCCESS;
             }
         }
-        return InteractionResult.PASS;
+
+        // Storing items
+        if(level.getBlockEntity(pos) instanceof DecoratedPotBlockEntity entity){
+            ItemStack stored = ((Container)entity).getItem(0);
+            if(!stack.isEmpty() && (stored.isEmpty() || (ItemStack.isSameItemSameTags(stack, stored) && stored.getCount() < stored.getMaxStackSize()))){
+                ((PotteryDecoratedPotBlockEntity)entity).potteryWobble(PotBlockEntity.WobbleStyle.POSITIVE);
+                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                float fillPercentage;
+                if(stored.isEmpty())
+                    stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
+                else
+                    stored.grow(stack.split(1).getCount());
+                ((Container)entity).setItem(0, stored);
+                fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
+                level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
+                if(level instanceof ServerLevel)
+                    ((ServerLevel)level).sendParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 1.3, pos.getZ() + 0.5, 7, 0, 0, 0, 0);
+                entity.setChanged();
+            }else{
+                level.playSound(null, pos, SoundEvents.WAXED_SIGN_INTERACT_FAIL, SoundSource.BLOCKS, 1, 1);
+                ((PotteryDecoratedPotBlockEntity)entity).potteryWobble(PotBlockEntity.WobbleStyle.NEGATIVE);
+            }
+        }
+        level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
+        return InteractionResult.SUCCESS;
     }
 }
