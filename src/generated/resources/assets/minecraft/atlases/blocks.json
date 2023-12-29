@@ -1318,11 +1318,11 @@
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/decorated_pot_side"
+      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
     },
     {
       "type": "minecraft:single",
-      "resource": "pottery:patterns/lime/mourner_pottery_pattern"
+      "resource": "pottery:patterns/lime/decorated_pot_side"
     },
     {
       "type": "minecraft:single",

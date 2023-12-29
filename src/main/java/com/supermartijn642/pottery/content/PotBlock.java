@@ -27,6 +27,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -150,24 +151,24 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
 
         // Storing items
         if(level.getBlockEntity(pos) instanceof PotBlockEntity entity){
-            ItemStack stored = entity.getItem(0);
+            ItemStack stored = entity.getTheItem();
             if(!stack.isEmpty() && (stored.isEmpty() || (ItemStack.isSameItemSameTags(stack, stored) && stored.getCount() < stored.getMaxStackSize()))){
-                entity.wobble(PotBlockEntity.WobbleStyle.POSITIVE);
+                entity.wobble(DecoratedPotBlockEntity.WobbleStyle.POSITIVE);
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 float fillPercentage;
                 if(stored.isEmpty())
                     stored = player.isCreative() ? stack.copyWithCount(1) : stack.split(1);
                 else
                     stored.grow(player.isCreative() ? 1 : stack.split(1).getCount());
-                entity.setItem(0, stored);
+                entity.setTheItem(stored);
                 fillPercentage = (float)stored.getCount() / stored.getMaxStackSize();
-                level.playSound(null, pos, SoundEvents.DECORATED_POT_STEP, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
+                level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT, SoundSource.BLOCKS, 1.0f, 0.7f + 0.5f * fillPercentage);
                 if(level instanceof ServerLevel)
-                    ((ServerLevel)level).sendParticles(ParticleTypes.CLOUD, pos.getX() + 0.5, pos.getY() + 1.3, pos.getZ() + 0.5, 7, 0, 0, 0, 0);
+                    ((ServerLevel)level).sendParticles(ParticleTypes.DUST_PLUME, pos.getX() + 0.5, pos.getY() + 1.2, pos.getZ() + 0.5, 7, 0, 0, 0, 0);
                 entity.setChanged();
             }else{
-                level.playSound(null, pos, SoundEvents.WAXED_SIGN_INTERACT_FAIL, SoundSource.BLOCKS, 1, 1);
-                entity.wobble(PotBlockEntity.WobbleStyle.NEGATIVE);
+                level.playSound(null, pos, SoundEvents.DECORATED_POT_INSERT_FAIL, SoundSource.BLOCKS, 1, 1);
+                entity.wobble(DecoratedPotBlockEntity.WobbleStyle.NEGATIVE);
             }
         }
         level.gameEvent(player, GameEvent.BLOCK_CHANGE, pos);
@@ -185,12 +186,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
 
     @Override
     public void onRemove(BlockState oldState, Level level, BlockPos pos, BlockState newState, boolean bl){
-        if(oldState.is(newState.getBlock()))
-            return;
-        if(level.getBlockEntity(pos) instanceof PotBlockEntity entity){
-            Containers.dropContents(level, pos, entity);
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
+        Containers.dropContentsOnDestroy(oldState, newState, level, pos);
         super.onRemove(oldState, level, pos, newState, bl);
     }
 
@@ -236,13 +232,13 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     }
 
     @Override
-    public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player){
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player){
         ItemStack stack = player.getMainHandItem();
         if(stack.is(ItemTags.BREAKS_DECORATED_POTS) && !EnchantmentHelper.hasSilkTouch(stack)){
             state = state.setValue(CRACKED, true);
             level.setBlock(pos, state, 4);
         }
-        super.playerWillDestroy(level, pos, state, player);
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
@@ -270,7 +266,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     }
 
     @Override
-    public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state){
+    public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state){
         if(level.getBlockEntity(pos) instanceof PotBlockEntity entity)
             return entity.itemFromDecorations();
         return super.getCloneItemStack(level, pos, state);
@@ -279,7 +275,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult blockHitResult, Projectile projectile){
         BlockPos pos = blockHitResult.getBlockPos();
-        if(!level.isClientSide && projectile.mayInteract(level, pos)){
+        if(!level.isClientSide && projectile.mayInteract(level, pos) && projectile.mayBreak(level)){
             level.setBlock(pos, state.setValue(CRACKED, true), 4);
             level.destroyBlock(pos, true, projectile);
         }

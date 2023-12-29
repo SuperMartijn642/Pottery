@@ -11,6 +11,7 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 
@@ -21,7 +22,7 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
     @Override
     public void render(PotBlockEntity entity, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int combinedLight, int combinedOverlay){
         poseStack.pushPose();
-        PotBlockEntity.WobbleStyle wobbleStyle = entity.lastWobbleStyle;
+        DecoratedPotBlockEntity.WobbleStyle wobbleStyle = entity.lastWobbleStyle;
         boolean cullFaces = true;
         if(wobbleStyle != null && entity.hasLevel()){
             float wobble = (entity.getLevel().getGameTime() - entity.wobbleStartedAtTick + partialTicks) / wobbleStyle.duration;
@@ -29,7 +30,7 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
                 Direction facing = entity.getFacing();
                 poseStack.translate(0.5, 0.0, 0.5);
                 poseStack.mulPose(Axis.YP.rotationDegrees(180 - facing.toYRot()));
-                if(wobbleStyle == PotBlockEntity.WobbleStyle.POSITIVE){
+                if(wobbleStyle == DecoratedPotBlockEntity.WobbleStyle.POSITIVE){
                     float rotation = wobble * ((float)Math.PI * 2);
                     float xAxis = -1.5f * (Mth.cos(rotation) + 0.5f) * Mth.sin(rotation / 2);
                     poseStack.mulPose(Axis.XP.rotation(xAxis * 0.015625f));

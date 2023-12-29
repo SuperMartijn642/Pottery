@@ -37,9 +37,6 @@ public class Pottery {
         if(CommonUtils.getEnvironmentSide().isClient())
             PotteryClient.register();
         registerGenerators();
-
-        // Adjust vanilla decorated pot's stack size to 64
-        Items.DECORATED_POT.maxStackSize = 64;
     }
 
     private static void register(){

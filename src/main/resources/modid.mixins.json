@@ -4,13 +4,8 @@
   "package": "${mod_package}.${mixin_package}",
   "compatibilityLevel": "${mixin_compatibility_level}",
   "refmap": "${mod_id}.mixins.refmap.json",
-  "mixins": [
-    "DecoratedPotBlockEntityMixin",
-    "DecoratedPotBlockMixin"
-  ],
-  "client": [
-    "DecoratedPotRendererMixin"
-  ],
+  "mixins": [],
+  "client": [],
   "server": [],
   "injectors": {
     "defaultRequire": 1
