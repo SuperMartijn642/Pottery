@@ -59,7 +59,7 @@ public class PotRecipe extends ShapedRecipe {
 
     @Override
     public RecipeSerializer<?> getSerializer(){
-        return null;
+        return SERIALIZER;
     }
 
     private DecoratedPotBlockEntity.Decorations findRecipeDecorations(CraftingContainer container){
