@@ -50,7 +50,8 @@ public class Pottery implements ModInitializer {
         GeneratorRegistrationHandler handler = GeneratorRegistrationHandler.get(MODID);
         handler.addGenerator(PotteryAtlasSourceGenerator::new);
         handler.addGenerator(PotteryBlockStateGenerator::new);
-        handler.addGenerator(PotteryItemInfoGenerator::new);
+        //noinspection Convert2MethodRef
+        handler.addGenerator(cache -> new PotteryItemInfoGenerator(cache));
         handler.addGenerator(PotteryLanguageGenerator::new);
         handler.addGenerator(PotteryLootTableGenerator::new);
         handler.addGenerator(PotteryModelGenerator::new);
