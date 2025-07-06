@@ -5,13 +5,13 @@ import com.supermartijn642.core.block.BaseBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.RandomizableContainer;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -127,34 +127,24 @@ public class PotBlockEntity extends BaseBlockEntity implements RandomizableConta
     @Override
     protected CompoundTag writeData(){
         CompoundTag data = new CompoundTag();
-        if(this.decorations.equals(PotDecorations.EMPTY))
-            data.putBoolean("decorationsEmpty", true);
-        else
-            this.decorations.save(data);
+        if(this.decorations != PotDecorations.EMPTY)
+            data.put("sherds", PotDecorations.CODEC.encodeStart(NbtOps.INSTANCE, this.decorations).getOrThrow());
         if(!this.trySaveLootTable(data) && !this.items.isEmpty())
-            data.put("items", this.items.saveOptional(this.level.registryAccess()));
+            data.put("items", this.items.save(this.level.registryAccess()));
         return data;
     }
 
     @Override
     protected void saveAdditional(CompoundTag compound, HolderLookup.Provider provider){
         super.saveAdditional(compound, provider);
-        this.decorations.save(compound);
-    }
-
-    @Override
-    protected CompoundTag writeItemStackData(){
-        CompoundTag data = this.writeData();
-        if(data != null)
-            data.remove("decorationsEmpty");
-        return data;
+        compound.put("sherds", PotDecorations.CODEC.encodeStart(NbtOps.INSTANCE, this.decorations).getOrThrow());
     }
 
     @Override
     protected void readData(CompoundTag data){
-        this.decorations = PotDecorations.load(data);
+        this.decorations = data.contains("sherds") ? PotDecorations.CODEC.decode(NbtOps.INSTANCE, data.get("sherds")).getOrThrow().getFirst() : PotDecorations.EMPTY;
         if(!this.tryLoadLootTable(data))
-            this.items = data.contains("items", Tag.TAG_COMPOUND) ? ItemStack.parseOptional(CommonUtils.getRegistryAccess(), data.getCompound("items")) : ItemStack.EMPTY;
+            this.items = data.getCompound("items").flatMap(t -> ItemStack.parse(CommonUtils.getRegistryAccess(), t)).orElse(ItemStack.EMPTY);
     }
 
     @Override
@@ -165,14 +155,14 @@ public class PotBlockEntity extends BaseBlockEntity implements RandomizableConta
     }
 
     @Override
-    protected void applyImplicitComponents(BlockEntity.DataComponentInput dataComponentInput) {
-        super.applyImplicitComponents(dataComponentInput);
-        this.decorations = dataComponentInput.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
-        this.items = dataComponentInput.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyOne();
+    protected void applyImplicitComponents(DataComponentGetter components){
+        super.applyImplicitComponents(components);
+        this.decorations = components.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY);
+        this.items = components.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY).copyOne();
     }
 
     @Override
-    public void removeComponentsFromTag(CompoundTag compoundTag) {
+    public void removeComponentsFromTag(CompoundTag compoundTag){
         super.removeComponentsFromTag(compoundTag);
         compoundTag.remove("sherds");
         compoundTag.remove("item");

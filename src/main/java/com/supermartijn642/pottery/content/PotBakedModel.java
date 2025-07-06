@@ -5,12 +5,13 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.TextureAtlases;
+import com.supermartijn642.core.util.Pair;
 import com.supermartijn642.pottery.Pottery;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -39,7 +40,7 @@ import java.util.function.Supplier;
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
-public class PotBakedModel implements BakedModel {
+public class PotBakedModel implements BlockStateModel {
 
     private static final ResourceLocation DUMMY_PATTERN_SPRITE = ResourceLocation.fromNamespaceAndPath(Pottery.MODID, "dummy_pattern");
     private static final int BLOCK_VERTEX_DATA_UV_OFFSET = findUVOffset(DefaultVertexFormat.BLOCK);
@@ -47,23 +48,36 @@ public class PotBakedModel implements BakedModel {
 
     private static final ThreadLocal<PotData> MODEL_DATA = new ThreadLocal<>();
 
-    private final BakedModel original;
-    public ItemStack stack = ItemStack.EMPTY;
+    private final BlockStateModel original;
+    private final List<BlockModelPart> parts;
 
-    public PotBakedModel(BakedModel original){
+    public PotBakedModel(BlockStateModel original){
         this.original = original;
+        this.parts = original == null ? List.of() : original.collectParts(RandomSource.create(42)).stream()
+            .<BlockModelPart>map(part -> new BlockModelPart() {
+                @Override
+                public List<BakedQuad> getQuads(@Nullable Direction cullDirection){
+                    return PotBakedModel.getBlockQuads(part.getQuads(cullDirection));
+                }
+
+                @Override
+                public boolean useAmbientOcclusion(){
+                    return part.useAmbientOcclusion();
+                }
+
+                @Override
+                public TextureAtlasSprite particleIcon(){
+                    return part.particleIcon();
+                }
+            })
+            .toList();
     }
 
     @Override
-    public boolean isVanillaAdapter(){
-        return false;
-    }
-
-    @Override
-    public void emitBlockQuads(QuadEmitter emitter, BlockAndTintGetter blockView, BlockState state, BlockPos pos, Supplier<RandomSource> randomSupplier, Predicate<@Nullable Direction> cullTest){
+    public void emitQuads(QuadEmitter emitter, BlockAndTintGetter blockView, BlockPos pos, BlockState state, RandomSource random, Predicate<@Nullable Direction> cullTest){
         BlockEntity entity;
         if(!(state.getBlock() instanceof PotBlock) || !((entity = blockView.getBlockEntity(pos)) instanceof PotBlockEntity)){
-            BakedModel.super.emitBlockQuads(emitter, blockView, state, pos, randomSupplier, cullTest);
+            BlockStateModel.super.emitQuads(emitter, blockView, pos, state, random, cullTest);
             return;
         }
 
@@ -73,50 +87,54 @@ public class PotBakedModel implements BakedModel {
         Direction facing = state.getValue(PotBlock.HORIZONTAL_FACING);
         MODEL_DATA.set(new PotData(type, color, facing, decorations));
         try{
-            BakedModel.super.emitBlockQuads(emitter, blockView, state, pos, randomSupplier, cullTest);
+            BlockStateModel.super.emitQuads(emitter, blockView, pos, state, random, cullTest);
         }finally{
             MODEL_DATA.remove();
         }
     }
 
     @Override
-    public void emitItemQuads(QuadEmitter emitter, Supplier<RandomSource> randomSupplier){
-        Block block = this.stack.getItem() instanceof BlockItem ? ((BlockItem)this.stack.getItem()).getBlock() : null;
-        if(!(block instanceof PotBlock)){
-            BakedModel.super.emitItemQuads(emitter, randomSupplier);
-            return;
-        }
-
-        PotType type = ((PotBlock)block).getType();
-        PotColor color = ((PotBlock)block).getColor();
-        PotDecorations decorations = this.stack.get(DataComponents.POT_DECORATIONS);
-        if(decorations == null) decorations = PotDecorations.EMPTY;
-        MODEL_DATA.set(new PotData(type, color, Direction.SOUTH, decorations));
-        try{
-            BakedModel.super.emitItemQuads(emitter, randomSupplier);
-        }finally{
-            MODEL_DATA.remove();
-        }
+    public @Nullable Object createGeometryKey(BlockAndTintGetter blockView, BlockPos pos, BlockState state, RandomSource random){
+        return Pair.of(this, MODEL_DATA.get());
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, RandomSource random){
+    public void collectParts(RandomSource randomSource, List<BlockModelPart> list){
+        list.addAll(this.parts);
+    }
+
+    public static List<BakedQuad> getBlockQuads(List<BakedQuad> quads){
         PotData data = MODEL_DATA.get() == null ? DEFAULT_POT_DATA : MODEL_DATA.get();
-        return this.original.getQuads(state, side, random).stream()
-            .map(quad -> this.adjustQuad(quad, data))
+        return quads.stream()
+            .map(quad -> adjustQuad(quad, data))
             .toList();
     }
 
-    private BakedQuad adjustQuad(BakedQuad quad, PotData data){
-        if(quad.getDirection().getAxis().isVertical())
+    public static List<BakedQuad> getItemQuads(ItemStack stack, List<BakedQuad> quads){
+        Block block = stack.getItem() instanceof BlockItem ? ((BlockItem)stack.getItem()).getBlock() : null;
+        if(!(block instanceof PotBlock))
+            return List.of();
+
+        PotType type = ((PotBlock)block).getType();
+        PotColor color = ((PotBlock)block).getColor();
+        PotDecorations decorations = stack.get(DataComponents.POT_DECORATIONS);
+        if(decorations == null) decorations = PotDecorations.EMPTY;
+        PotData data = new PotData(type, color, Direction.SOUTH, decorations);
+        return quads.stream()
+            .map(quad -> adjustQuad(quad, data))
+            .toList();
+    }
+
+    private static BakedQuad adjustQuad(BakedQuad quad, PotData data){
+        if(quad.direction().getAxis().isVertical())
             return quad;
 
-        TextureAtlasSprite sprite = quad.getSprite();
+        TextureAtlasSprite sprite = quad.sprite();
         ResourceLocation spriteName = sprite.contents().name();
         // Swap pattern
         if(DUMMY_PATTERN_SPRITE.equals(spriteName)){
             // Find the correct decoration for the quad's side of the pot
-            Item decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.getDirection()).orElse(Items.BRICK);
+            Item decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.direction()).orElse(Items.BRICK);
             ResourceKey<DecoratedPotPattern> decorationKey = DecoratedPotPatterns.getPatternFromItem(decorationItem);
             if(decorationKey == null)
                 return quad;
@@ -129,7 +147,7 @@ public class PotBakedModel implements BakedModel {
         // Swap side
         if(spriteName.getNamespace().equals("pottery") && spriteName.getPath().equals(data.type.getIdentifier() + "/" + data.type.getIdentifier(data.color) + "_side")){
             // Find the correct decoration for the quad's side of the pot
-            Optional<Item> decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.getDirection());
+            Optional<Item> decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.direction());
             // Ignore bricks
             if(decorationItem.isPresent()){
                 TextureAtlasSprite target = ClientUtils.getMinecraft().getTextureAtlas(TextureAtlases.getBlocks()).apply(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, data.type.getIdentifier() + "/" + data.type.getIdentifier(data.color) + "_side_decorated"));
@@ -141,7 +159,7 @@ public class PotBakedModel implements BakedModel {
     }
 
     private static BakedQuad swapSprite(BakedQuad quad, TextureAtlasSprite oldSprite, TextureAtlasSprite newSprite){
-        int[] vertexData = quad.getVertices();
+        int[] vertexData = quad.vertices();
         // Make sure we don't change the original quad
         vertexData = Arrays.copyOf(vertexData, vertexData.length);
 
@@ -159,7 +177,7 @@ public class PotBakedModel implements BakedModel {
             float v = newSprite.getV0() + (Float.intBitsToFloat(vertexData[offset + 1]) - oldSprite.getV0()) / oldHeight * newHeight;
             vertexData[offset + 1] = Float.floatToRawIntBits(v);
         }
-        return new BakedQuad(vertexData, quad.getTintIndex(), quad.getDirection(), newSprite, quad.isShade(), quad.getLightEmission());
+        return new BakedQuad(vertexData, quad.tintIndex(), quad.direction(), newSprite, quad.shade(), quad.lightEmission());
     }
 
     private static int findUVOffset(VertexFormat vertexFormat){
@@ -177,28 +195,8 @@ public class PotBakedModel implements BakedModel {
     }
 
     @Override
-    public boolean useAmbientOcclusion(){
-        return this.original.useAmbientOcclusion();
-    }
-
-    @Override
-    public boolean isGui3d(){
-        return this.original.isGui3d();
-    }
-
-    @Override
-    public boolean usesBlockLight(){
-        return this.original.usesBlockLight();
-    }
-
-    @Override
-    public TextureAtlasSprite getParticleIcon(){
-        return this.original.getParticleIcon();
-    }
-
-    @Override
-    public ItemTransforms getTransforms(){
-        return this.original.getTransforms();
+    public TextureAtlasSprite particleIcon(){
+        return this.original.particleIcon();
     }
 
     private record PotData(PotType type, PotColor color, Direction facing, PotDecorations decorations) {
