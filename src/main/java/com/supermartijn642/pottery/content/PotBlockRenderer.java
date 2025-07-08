@@ -5,16 +5,16 @@ import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.client.model.data.ModelData;
+
+import java.util.List;
 
 /**
  * Created 27/12/2023 by SuperMartijn642
@@ -53,13 +53,9 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         // Render the regular block
         BlockRenderDispatcher blockRenderer = ClientUtils.getBlockRenderer();
         BlockState state = entity.getBlockState();
-        BakedModel model = blockRenderer.getBlockModel(state);
-        ModelData modelData = model.getModelData(entity.getLevel(), entity.getBlockPos(), state, ModelData.EMPTY);
-        Level level = entity.getLevel();
-        long seed = state.getSeed(entity.getBlockPos());
-        RANDOM_SOURCE.setSeed(seed);
-        for(RenderType renderType : model.getRenderTypes(state, RANDOM_SOURCE, modelData))
-            blockRenderer.getModelRenderer().tesselateBlock(level, model, state, entity.getBlockPos(), poseStack, bufferSource.getBuffer(renderType), cullFaces, RANDOM_SOURCE, seed, combinedOverlay, modelData, renderType);
+        BlockStateModel model = blockRenderer.getBlockModel(state);
+        List<BlockModelPart> parts = model.collectParts(entity.getLevel(), entity.getBlockPos(), state, RANDOM_SOURCE);
+        ClientUtils.getBlockRenderer().getModelRenderer().tesselateBlock(entity.getLevel(), parts, state, entity.getBlockPos(), poseStack, bufferSource::getBuffer, cullFaces, combinedOverlay);
 
         poseStack.popPose();
     }
