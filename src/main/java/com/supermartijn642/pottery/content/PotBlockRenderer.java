@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
+import net.fabricmc.fabric.api.renderer.v1.render.RenderLayerHelper;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
@@ -49,7 +50,7 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         BlockRenderDispatcher blockRenderer = ClientUtils.getBlockRenderer();
         BlockState state = entity.getBlockState();
         BlockStateModel model = blockRenderer.getBlockModel(state);
-        ClientUtils.getBlockRenderer().getModelRenderer().render(entity.getLevel(), model, state, entity.getBlockPos(), poseStack, bufferSource, cullFaces, state.getSeed(entity.getBlockPos()), combinedOverlay);
+        ClientUtils.getBlockRenderer().getModelRenderer().render(entity.getLevel(), model, state, entity.getBlockPos(), poseStack, RenderLayerHelper.movingDelegate(bufferSource), cullFaces, state.getSeed(entity.getBlockPos()), combinedOverlay);
 
         poseStack.popPose();
     }
