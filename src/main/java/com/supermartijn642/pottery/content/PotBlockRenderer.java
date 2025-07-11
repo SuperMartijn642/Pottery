@@ -13,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.client.RenderTypeHelper;
 
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         BlockState state = entity.getBlockState();
         BlockStateModel model = blockRenderer.getBlockModel(state);
         List<BlockModelPart> parts = model.collectParts(entity.getLevel(), entity.getBlockPos(), state, RANDOM_SOURCE);
-        ClientUtils.getBlockRenderer().getModelRenderer().tesselateBlock(entity.getLevel(), parts, state, entity.getBlockPos(), poseStack, bufferSource::getBuffer, cullFaces, combinedOverlay);
+        ClientUtils.getBlockRenderer().getModelRenderer().tesselateBlock(entity.getLevel(), parts, state, entity.getBlockPos(), poseStack, layer -> bufferSource.getBuffer(RenderTypeHelper.getMovingBlockRenderType(layer)), cullFaces, combinedOverlay);
 
         poseStack.popPose();
     }
