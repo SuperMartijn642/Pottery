@@ -16,11 +16,9 @@ import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.entity.PotDecorations;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 /**
  * Created 01/12/2023 by SuperMartijn642
@@ -28,12 +26,13 @@ import java.util.function.Consumer;
 public class PotEventHandlers {
 
     public static void registerListeners(){
-        MinecraftForge.EVENT_BUS.addListener((Consumer<PlayerInteractEvent.RightClickBlock>)event -> {
+        PlayerInteractEvent.RightClickBlock.BUS.addListener(event -> {
             InteractionResult result = onInteract(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
             if(result != InteractionResult.PASS){
-                event.setCanceled(true);
                 event.setCancellationResult(result);
+                return true;
             }
+            return false;
         });
     }
 

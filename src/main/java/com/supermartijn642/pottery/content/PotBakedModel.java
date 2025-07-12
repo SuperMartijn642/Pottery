@@ -6,10 +6,10 @@ import com.mojang.blaze3d.vertex.VertexFormatElement;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.TextureAtlases;
 import com.supermartijn642.pottery.Pottery;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -67,9 +67,9 @@ public class PotBakedModel implements BlockStateModel {
     }
 
     @Override
-    public void collectParts(RandomSource random, List<BlockModelPart> parts, ModelData modelData, @Nullable RenderType renderType){
+    public void collectParts(RandomSource random, List<BlockModelPart> parts, ModelData modelData, @Nullable ChunkSectionLayer layer){
         PotData data = modelData.has(MODEL_PROPERTY) ? modelData.get(MODEL_PROPERTY) : DEFAULT_POT_DATA;
-        for(BlockModelPart part : this.original.collectParts(random, modelData, renderType)){
+        for(BlockModelPart part : this.original.collectParts(random, modelData, layer)){
             parts.add(new BlockModelPart() {
                 @Override
                 public List<BakedQuad> getQuads(@Nullable Direction cullDirection){

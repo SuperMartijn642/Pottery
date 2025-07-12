@@ -13,7 +13,9 @@ import net.minecraft.client.renderer.item.ModelRenderProperties;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelBaker;
 import net.minecraft.client.resources.model.ResolvedModel;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.entity.PotDecorations;
 import org.joml.Vector3f;
 
 import java.util.List;
@@ -40,16 +42,25 @@ public class PotItemModel implements ItemModel.Unbaked {
         ResolvedModel model = modelBaker.getModel(this.model);
         TextureSlots textures = model.getTopTextureSlots();
         List<BakedQuad> quads = model.bakeTopGeometry(textures, modelBaker, BlockModelRotation.X0_Y0).getAll();
+        boolean animated = quads.stream().anyMatch(quad -> quad.sprite().isAnimated());
         ModelRenderProperties properties = ModelRenderProperties.fromResolvedModel(modelBaker, model, textures);
         Supplier<Vector3f[]> extents = Suppliers.memoize(() -> BlockModelWrapper.computeExtents(quads));
         return (state, stack, modelResolver, displayContext, level, entity, someRandomId) -> {
+            state.appendModelIdentityElement(this);
+            state.appendModelIdentityElement(this.model);
             ItemStackRenderState.LayerRenderState layer = state.newLayer();
-            if(stack.hasFoil())
+            if(stack.hasFoil()){
                 layer.setFoilType(ItemStackRenderState.FoilType.STANDARD);
+                state.appendModelIdentityElement(ItemStackRenderState.FoilType.STANDARD);
+                state.setAnimated();
+            }
             layer.setExtents(extents);
             layer.setRenderType(ItemBlockRenderTypes.getRenderType(stack));
             properties.applyToLayer(layer, displayContext);
+            state.appendModelIdentityElement(stack.getOrDefault(DataComponents.POT_DECORATIONS, PotDecorations.EMPTY));
             layer.prepareQuadList().addAll(PotBakedModel.getItemQuads(stack, quads));
+            if(animated)
+                state.setAnimated();
         };
     }
 

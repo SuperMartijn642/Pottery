@@ -5,16 +5,17 @@ import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockModelPart;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.client.RenderTypeHelper;
 import net.minecraftforge.client.model.data.ModelData;
 
 import java.util.List;
@@ -62,10 +63,10 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         modelData = model.getModelData(entity.getLevel(), entity.getBlockPos(), state, ModelData.EMPTY);
         long seed = state.getSeed(entity.getBlockPos());
         RANDOM_SOURCE.setSeed(seed);
-        for(RenderType renderType : model.getRenderTypes(state, RANDOM_SOURCE, modelData)){
+        for(ChunkSectionLayer layer : model.getRenderTypes(state, RANDOM_SOURCE, modelData)){
             RANDOM_SOURCE.setSeed(seed);
-            List<BlockModelPart> parts = model.collectParts(RANDOM_SOURCE, modelData, renderType);
-            blockRenderer.getModelRenderer().tesselateBlock(level, parts, state, entity.getBlockPos(), poseStack, bufferSource.getBuffer(renderType), cullFaces, combinedOverlay);
+            List<BlockModelPart> parts = model.collectParts(RANDOM_SOURCE, modelData, layer);
+            blockRenderer.getModelRenderer().tesselateBlock(level, parts, state, entity.getBlockPos(), poseStack, bufferSource.getBuffer(RenderTypeHelper.getMovingBlockRenderType(layer)), cullFaces, combinedOverlay);
         }
 
         poseStack.popPose();
