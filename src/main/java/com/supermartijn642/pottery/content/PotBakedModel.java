@@ -8,9 +8,9 @@ import com.supermartijn642.core.render.TextureAtlases;
 import com.supermartijn642.pottery.Pottery;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.block.model.BlockModelPart;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -28,7 +28,6 @@ import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
 import net.minecraft.world.level.block.entity.PotDecorations;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.NotNull;
@@ -41,17 +40,16 @@ import java.util.Optional;
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
-public class PotBakedModel implements BakedModel, IDynamicBakedModel {
+public class PotBakedModel implements BlockStateModel {
 
     private static final ResourceLocation DUMMY_PATTERN_SPRITE = ResourceLocation.fromNamespaceAndPath(Pottery.MODID, "dummy_pattern");
     private static final int BLOCK_VERTEX_DATA_UV_OFFSET = findUVOffset(DefaultVertexFormat.BLOCK);
     private static final PotData DEFAULT_POT_DATA = new PotData(PotType.DEFAULT, PotColor.BLANK, Direction.NORTH, PotDecorations.EMPTY);
     private static final ModelProperty<PotData> MODEL_PROPERTY = new ModelProperty<>();
 
-    private final BakedModel original;
-    private PotData itemModelData;
+    private final BlockStateModel original;
 
-    public PotBakedModel(BakedModel original){
+    public PotBakedModel(BlockStateModel original){
         this.original = original;
     }
 
@@ -68,39 +66,62 @@ public class PotBakedModel implements BakedModel, IDynamicBakedModel {
         return ModelData.builder().with(MODEL_PROPERTY, new PotData(type, color, facing, decorations)).build();
     }
 
-    public void setItemStack(ItemStack stack){
+    @Override
+    public void collectParts(RandomSource random, List<BlockModelPart> parts, ModelData modelData, @Nullable RenderType renderType){
+        PotData data = modelData.has(MODEL_PROPERTY) ? modelData.get(MODEL_PROPERTY) : DEFAULT_POT_DATA;
+        for(BlockModelPart part : this.original.collectParts(random, modelData, renderType)){
+            parts.add(new BlockModelPart() {
+                @Override
+                public List<BakedQuad> getQuads(@Nullable Direction cullDirection){
+                    return part.getQuads(cullDirection).stream()
+                        .map(quad -> adjustQuad(quad, data))
+                        .toList();
+                }
+
+                @Override
+                public boolean useAmbientOcclusion(){
+                    //noinspection deprecation
+                    return part.useAmbientOcclusion();
+                }
+
+                @Override
+                public TextureAtlasSprite particleIcon(){
+                    return part.particleIcon();
+                }
+            });
+        }
+    }
+
+    @Override
+    public void collectParts(RandomSource random, List<BlockModelPart> parts){
+        this.original.collectParts(random, parts);
+    }
+
+    public static List<BakedQuad> getItemQuads(ItemStack stack, List<BakedQuad> quads){
         Block block = stack.getItem() instanceof BlockItem ? ((BlockItem)stack.getItem()).getBlock() : null;
-        if(block == null || !(block instanceof PotBlock))
-            return;
+        if(!(block instanceof PotBlock))
+            return List.of();
 
         PotType type = ((PotBlock)block).getType();
         PotColor color = ((PotBlock)block).getColor();
         PotDecorations decorations = stack.get(DataComponents.POT_DECORATIONS);
         if(decorations == null) decorations = PotDecorations.EMPTY;
-        this.itemModelData = new PotData(type, color, Direction.SOUTH, decorations);
-    }
-
-    @Override
-    public @NotNull List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @NotNull RandomSource random, @NotNull ModelData modelData, @Nullable RenderType renderType){
-        PotData data = modelData.has(MODEL_PROPERTY) ? modelData.get(MODEL_PROPERTY) : DEFAULT_POT_DATA;
-        if(data == DEFAULT_POT_DATA && state == null && this.itemModelData != null)
-            data = this.itemModelData;
-        PotData finalData = data;
-        return this.original.getQuads(state, side, random).stream()
-            .map(quad -> this.adjustQuad(quad, finalData))
+        PotData data = new PotData(type, color, Direction.SOUTH, decorations);
+        return quads.stream()
+            .map(quad -> adjustQuad(quad, data))
             .toList();
     }
 
-    private BakedQuad adjustQuad(BakedQuad quad, PotData data){
-        if(quad.getDirection().getAxis().isVertical())
+    private static BakedQuad adjustQuad(BakedQuad quad, PotData data){
+        if(quad.direction().getAxis().isVertical())
             return quad;
 
-        TextureAtlasSprite sprite = quad.getSprite();
+        TextureAtlasSprite sprite = quad.sprite();
         ResourceLocation spriteName = sprite.contents().name();
         // Swap pattern
         if(DUMMY_PATTERN_SPRITE.equals(spriteName)){
             // Find the correct decoration for the quad's side of the pot
-            Item decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.getDirection()).orElse(Items.BRICK);
+            Item decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.direction()).orElse(Items.BRICK);
             ResourceKey<DecoratedPotPattern> decorationKey = DecoratedPotPatterns.getPatternFromItem(decorationItem);
             if(decorationKey == null)
                 return quad;
@@ -113,7 +134,7 @@ public class PotBakedModel implements BakedModel, IDynamicBakedModel {
         // Swap side
         if(spriteName.getNamespace().equals("pottery") && spriteName.getPath().equals(data.type.getIdentifier() + "/" + data.type.getIdentifier(data.color) + "_side")){
             // Find the correct decoration for the quad's side of the pot
-            Optional<Item> decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.getDirection());
+            Optional<Item> decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.direction());
             // Ignore bricks
             if(decorationItem.isPresent()){
                 TextureAtlasSprite target = ClientUtils.getMinecraft().getTextureAtlas(TextureAtlases.getBlocks()).apply(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, data.type.getIdentifier() + "/" + data.type.getIdentifier(data.color) + "_side_decorated"));
@@ -125,7 +146,7 @@ public class PotBakedModel implements BakedModel, IDynamicBakedModel {
     }
 
     private static BakedQuad swapSprite(BakedQuad quad, TextureAtlasSprite oldSprite, TextureAtlasSprite newSprite){
-        int[] vertexData = quad.getVertices();
+        int[] vertexData = quad.vertices();
         // Make sure we don't change the original quad
         vertexData = Arrays.copyOf(vertexData, vertexData.length);
 
@@ -143,7 +164,7 @@ public class PotBakedModel implements BakedModel, IDynamicBakedModel {
             float v = newSprite.getV0() + (Float.intBitsToFloat(vertexData[offset + 1]) - oldSprite.getV0()) / oldHeight * newHeight;
             vertexData[offset + 1] = Float.floatToRawIntBits(v);
         }
-        return new BakedQuad(vertexData, quad.getTintIndex(), quad.getDirection(), newSprite, quad.isShade(), quad.getLightEmission());
+        return new BakedQuad(vertexData, quad.tintIndex(), quad.direction(), newSprite, quad.shade(), quad.lightEmission());
     }
 
     private static int findUVOffset(VertexFormat vertexFormat){
@@ -161,28 +182,9 @@ public class PotBakedModel implements BakedModel, IDynamicBakedModel {
     }
 
     @Override
-    public boolean useAmbientOcclusion(){
-        return this.original.useAmbientOcclusion();
-    }
-
-    @Override
-    public boolean isGui3d(){
-        return this.original.isGui3d();
-    }
-
-    @Override
-    public boolean usesBlockLight(){
-        return this.original.usesBlockLight();
-    }
-
-    @Override
-    public TextureAtlasSprite getParticleIcon(){
-        return this.original.getParticleIcon();
-    }
-
-    @Override
-    public ItemTransforms getTransforms(){
-        return this.original.getTransforms();
+    public TextureAtlasSprite particleIcon(){
+        //noinspection deprecation
+        return this.original.particleIcon();
     }
 
     private record PotData(PotType type, PotColor color, Direction facing, PotDecorations decorations) {
