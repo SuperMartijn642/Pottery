@@ -9,6 +9,7 @@ import com.supermartijn642.pottery.content.PotRecipe;
 import com.supermartijn642.pottery.content.PotType;
 import com.supermartijn642.pottery.generators.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.recipe.v1.sync.RecipeSynchronization;
 import net.minecraft.world.item.Items;
 
 /**
@@ -30,6 +31,7 @@ public class Pottery implements ModInitializer {
     @Override
     public void onInitialize(){
         PotEventHandlers.registerListeners();
+        RecipeSynchronization.synchronizeRecipeSerializer(PotRecipe.SERIALIZER);
 
         PotteryConfig.init();
         register();
