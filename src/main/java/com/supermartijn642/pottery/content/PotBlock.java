@@ -96,7 +96,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
             if(color == null || color == this.color)
                 return InteractionFeedback.CONSUME;
 
-            if(!level.isClientSide){
+            if(!level.isClientSide()){
                 BlockEntity entity = level.getBlockEntity(pos);
                 if(!(entity instanceof PotBlockEntity))
                     return InteractionFeedback.CONSUME;
@@ -141,7 +141,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
                 if(stack.is(oldItem.orElse(Items.BRICK)))
                     return InteractionFeedback.CONSUME;
 
-                if(!level.isClientSide){
+                if(!level.isClientSide()){
                     // Update the decorations
                     PotDecorations newDecorations = DecorationUtils.setDecorationItem(decorations, state.getValue(HORIZONTAL_FACING), hitSide, Optional.of(stack.getItem()));
                     entity.updateDecorations(newDecorations);
@@ -284,7 +284,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     }
 
     @Override
-    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos){
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction side){
         return AbstractContainerMenu.getRedstoneSignalFromBlockEntity(level.getBlockEntity(pos));
     }
 

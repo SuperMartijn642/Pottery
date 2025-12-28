@@ -10,13 +10,20 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.item.crafting.display.ShapedCraftingRecipeDisplay;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.PotDecorations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -28,15 +35,13 @@ public class PotRecipe extends ShapedRecipe {
 
     private final Ingredient dyeIngredient;
     private final int[] sherdIndices;
+    private final ItemStack output;
 
     public PotRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
         super(group, category, pattern, output, showNotification);
         this.dyeIngredient = dyeIngredient;
         this.sherdIndices = sherdIndices;
-    }
-
-    public Ingredient getDyeIngredient(){
-        return this.dyeIngredient;
+        this.output = output;
     }
 
     @Override
@@ -55,6 +60,26 @@ public class PotRecipe extends ShapedRecipe {
             stack.set(DataComponents.POT_DECORATIONS, decorations);
 
         return stack;
+    }
+
+    @Override
+    public List<RecipeDisplay> display(){
+        List<SlotDisplay> inputs = this.pattern.ingredients().stream().map(o -> o.map(Ingredient::display).orElse(SlotDisplay.Empty.INSTANCE)).collect(Collectors.toCollection(ArrayList::new));
+        if(this.dyeIngredient != null){
+            for(int i = 0; i < inputs.size(); i++){
+                if(inputs.get(i) == SlotDisplay.Empty.INSTANCE){
+                    inputs.set(i, this.dyeIngredient.display());
+                    break;
+                }
+            }
+        }
+        return List.of(new ShapedCraftingRecipeDisplay(
+            this.pattern.width(),
+            this.pattern.height(),
+            inputs,
+            new SlotDisplay.ItemStackSlotDisplay(this.output),
+            new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
+        ));
     }
 
     @Override

@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraft.world.level.storage.loot.entries.DynamicLoot;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 
 /**
@@ -42,7 +43,7 @@ public class PotteryLootTableGenerator extends LootTableGenerator {
                                         .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PotBlock.CRACKED, true)))
                                 .otherwise(
                                     LootItem.lootTableItem(block)
-                                        .apply(CopyComponentsFunction.copyComponents(CopyComponentsFunction.Source.BLOCK_ENTITY).include(DataComponents.POT_DECORATIONS))
+                                        .apply(CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY).include(DataComponents.POT_DECORATIONS))
                                 ).build()
                         )
                     );

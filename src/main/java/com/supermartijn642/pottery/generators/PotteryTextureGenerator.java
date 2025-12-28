@@ -9,7 +9,6 @@ import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.entity.DecoratedPotPatterns;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforgespi.language.IModFileInfo;
 
@@ -84,7 +83,7 @@ public class PotteryTextureGenerator extends ResourceGenerator {
         IModFileInfo modFile = ModList.get().getModFileById(file.getNamespace());
         if(modFile == null)
             throw new RuntimeException("Could not find mod for namespace '" + file.getNamespace() + "' for texture '" + file + "'!");
-        Path filePath = modFile.getFile().findResource("assets", file.getNamespace(), "textures", file.getPath() + ".png");
+        Path filePath = modFile.getFile().getContents().findFile("assets/" + file.getNamespace() + "/textures/" + file.getPath() + ".png").map(Path::of).orElse(null);
         if(filePath == null)
             throw new RuntimeException("Could not find file 'assets/" + file.getNamespace() + "/textures/" + file.getPath() + ".png' from mod '" + file.getNamespace() + "'!");
         try(InputStream stream = Files.newInputStream(filePath)){
