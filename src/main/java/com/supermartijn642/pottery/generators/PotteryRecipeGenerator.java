@@ -11,7 +11,7 @@ import com.supermartijn642.pottery.Pottery;
 import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -29,7 +29,7 @@ import java.util.Map;
  */
 public class PotteryRecipeGenerator extends ResourceGenerator {
 
-    private final Map<ResourceLocation,RecipeBuilder> recipes = new LinkedHashMap<>();
+    private final Map<Identifier,RecipeBuilder> recipes = new LinkedHashMap<>();
 
     public PotteryRecipeGenerator(ResourceCache cache){
         super(Pottery.MODID, cache);
@@ -42,7 +42,7 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
 
     public RecipeBuilder recipe(String location){
         this.cache.trackToBeGeneratedResource(ResourceType.DATA, this.modid, "recipe", location, ".json");
-        return this.recipes.computeIfAbsent(ResourceLocation.fromNamespaceAndPath(this.modid, location), i -> new RecipeBuilder());
+        return this.recipes.computeIfAbsent(Identifier.fromNamespaceAndPath(this.modid, location), i -> new RecipeBuilder());
     }
 
     @Override
@@ -94,8 +94,8 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
 
     @Override
     public void save(){
-        for(Map.Entry<ResourceLocation,RecipeBuilder> entry : this.recipes.entrySet()){
-            ResourceLocation location = entry.getKey();
+        for(Map.Entry<Identifier,RecipeBuilder> entry : this.recipes.entrySet()){
+            Identifier location = entry.getKey();
             RecipeBuilder recipe = entry.getValue();
 
             // Convert the recipe to json
@@ -168,7 +168,7 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
         }
 
         public RecipeBuilder input(char key, ItemLike... items){
-            return this.input(key, Arrays.stream(items).map(ItemLike::asItem).map(Registries.ITEMS::getIdentifier).map(ResourceLocation::toString).toArray(String[]::new));
+            return this.input(key, Arrays.stream(items).map(ItemLike::asItem).map(Registries.ITEMS::getIdentifier).map(Identifier::toString).toArray(String[]::new));
         }
 
         public RecipeBuilder input(char key, TagKey<Item> tag){

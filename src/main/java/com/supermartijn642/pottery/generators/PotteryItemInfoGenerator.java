@@ -6,7 +6,7 @@ import com.supermartijn642.pottery.Pottery;
 import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotItemModel;
 import com.supermartijn642.pottery.content.PotType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 /**
  * Created 27/12/2024 by SuperMartijn642
@@ -25,7 +25,7 @@ public class PotteryItemInfoGenerator extends ItemInfoGenerator {
                     continue;
                 // Item model
                 this.info(type.getItem(color))
-                    .model(new PotItemModel(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, "block/" + type.getIdentifier() + "/" + type.getIdentifier(color))));
+                    .model(new PotItemModel(Identifier.fromNamespaceAndPath(Pottery.MODID, "block/" + type.getIdentifier() + "/" + type.getIdentifier(color))));
             }
         }
     }

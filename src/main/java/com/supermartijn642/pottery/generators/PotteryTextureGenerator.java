@@ -10,7 +10,7 @@ import com.supermartijn642.pottery.content.PotType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,7 +30,7 @@ import java.util.Optional;
  */
 public class PotteryTextureGenerator extends ResourceGenerator {
 
-    private final List<Triple<ResourceLocation,String,PotColor>> hueShifts = new ArrayList<>();
+    private final List<Triple<Identifier,String,PotColor>> hueShifts = new ArrayList<>();
 
     public PotteryTextureGenerator(ResourceCache cache){
         super(Pottery.MODID, cache);
@@ -45,12 +45,12 @@ public class PotteryTextureGenerator extends ResourceGenerator {
                     continue;
                 String from = type.getIdentifier() + "/" + type.getIdentifier(PotColor.BLANK);
                 String to = type.getIdentifier() + "/" + type.getIdentifier(color);
-                this.hueShifts.add(Triple.of(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, from), to, color));
+                this.hueShifts.add(Triple.of(Identifier.fromNamespaceAndPath(Pottery.MODID, from), to, color));
                 this.cache.trackToBeGeneratedResource(ResourceType.ASSET, this.modid, "textures", to, ".png");
                 if(type != PotType.DEFAULT){
-                    this.hueShifts.add(Triple.of(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, from + "_side"), to + "_side", color));
+                    this.hueShifts.add(Triple.of(Identifier.fromNamespaceAndPath(Pottery.MODID, from + "_side"), to + "_side", color));
                     this.cache.trackToBeGeneratedResource(ResourceType.ASSET, this.modid, "textures", to + "_side", ".png");
-                    this.hueShifts.add(Triple.of(ResourceLocation.fromNamespaceAndPath(Pottery.MODID, from + "_side_decorated"), to + "_side_decorated", color));
+                    this.hueShifts.add(Triple.of(Identifier.fromNamespaceAndPath(Pottery.MODID, from + "_side_decorated"), to + "_side_decorated", color));
                     this.cache.trackToBeGeneratedResource(ResourceType.ASSET, this.modid, "textures", to + "_side_decorated", ".png");
                 }
             }
@@ -61,7 +61,7 @@ public class PotteryTextureGenerator extends ResourceGenerator {
             if(color == PotColor.BLANK)
                 continue;
             BuiltInRegistries.DECORATED_POT_PATTERN.listElements()
-                .filter(holder -> holder.key().location().getNamespace().equals("minecraft"))
+                .filter(holder -> holder.key().identifier().getNamespace().equals("minecraft"))
                 .map(holder -> holder.value().assetId().withPrefix("entity/decorated_pot/"))
                 .forEach(texture -> {
                     String to = "patterns/" + color.getIdentifier() + "/" + texture.getPath().substring(texture.getPath().lastIndexOf('/') + 1);
@@ -73,14 +73,14 @@ public class PotteryTextureGenerator extends ResourceGenerator {
 
     @Override
     public void save(){
-        for(Triple<ResourceLocation,String,PotColor> entry : this.hueShifts){
+        for(Triple<Identifier,String,PotColor> entry : this.hueShifts){
             BufferedImage image = this.readImage(entry.left());
             hueShiftImage(image, entry.right());
             this.cache.saveResource(ResourceType.ASSET, writeImage(image), this.modid, "textures", entry.middle(), ".png");
         }
     }
 
-    private BufferedImage readImage(ResourceLocation file){
+    private BufferedImage readImage(Identifier file){
         Optional<ModContainer> modContainer = FabricLoader.getInstance().getModContainer(file.getNamespace());
         if(modContainer.isEmpty())
             throw new RuntimeException("Could not find mod for namespace '" + file.getNamespace() + "' for texture '" + file + "'!");
