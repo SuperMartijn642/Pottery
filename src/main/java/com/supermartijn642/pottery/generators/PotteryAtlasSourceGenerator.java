@@ -32,7 +32,7 @@ public class PotteryAtlasSourceGenerator extends AtlasSourceGenerator {
             if(color == PotColor.BLANK)
                 continue;
             BuiltInRegistries.DECORATED_POT_PATTERN.listElements()
-                .filter(holder -> holder.key().location().getNamespace().equals("minecraft"))
+                .filter(holder -> holder.key().identifier().getNamespace().equals("minecraft"))
                 .map(holder -> holder.value().assetId().withPrefix("entity/decorated_pot/"))
                 .forEach(texture -> this.blockAtlas().texture("patterns/" + color.getIdentifier() + "/" + texture.getPath().substring(texture.getPath().lastIndexOf('/') + 1)));
         }
