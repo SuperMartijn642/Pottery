@@ -42,7 +42,7 @@ public class PotItemModel implements ItemModel.Unbaked {
         ResolvedModel model = modelBaker.getModel(this.model);
         TextureSlots textures = model.getTopTextureSlots();
         List<BakedQuad> quads = model.bakeTopGeometry(textures, modelBaker, BlockModelRotation.X0_Y0).getAll();
-        boolean animated = quads.stream().anyMatch(quad -> quad.sprite().isAnimated());
+        boolean animated = quads.stream().anyMatch(quad -> quad.sprite().contents().isAnimated());
         ModelRenderProperties properties = ModelRenderProperties.fromResolvedModel(modelBaker, model, textures);
         Supplier<Vector3f[]> extents = Suppliers.memoize(() -> BlockModelWrapper.computeExtents(quads));
         return (state, stack, modelResolver, displayContext, level, entity, someRandomId) -> {

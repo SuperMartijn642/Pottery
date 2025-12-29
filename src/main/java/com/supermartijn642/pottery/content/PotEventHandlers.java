@@ -49,7 +49,7 @@ public class PotEventHandlers {
                 if(block.getColor() == PotColor.BLANK)
                     return InteractionResult.CONSUME;
 
-                if(!level.isClientSide){
+                if(!level.isClientSide()){
                     ItemStack newStack = new ItemStack(block.getType().getItem(PotColor.BLANK), stack.getCount());
                     newStack.applyComponents(stack.getComponentsPatch());
                     player.setItemInHand(hand, newStack);
@@ -71,7 +71,7 @@ public class PotEventHandlers {
             if(color == null || color == PotColor.BLANK)
                 return InteractionResult.CONSUME;
 
-            if(!level.isClientSide){
+            if(!level.isClientSide()){
                 BlockEntity entity = level.getBlockEntity(pos);
                 if(!(entity instanceof DecoratedPotBlockEntity))
                     return InteractionResult.CONSUME;
@@ -103,7 +103,7 @@ public class PotEventHandlers {
                 if(stack.is(oldItem.orElse(Items.BRICK)))
                     return InteractionResult.CONSUME;
 
-                if(!level.isClientSide){
+                if(!level.isClientSide()){
                     // Update the decorations
                     entity.decorations = DecorationUtils.setDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide, Optional.of(stack.getItem()));
                     entity.setChanged();

@@ -107,7 +107,7 @@ public class PotBlockEntity extends BaseBlockEntity implements RandomizableConta
     }
 
     public void wobble(DecoratedPotBlockEntity.WobbleStyle style){
-        if(this.level == null || this.level.isClientSide)
+        if(this.level == null || this.level.isClientSide())
             return;
         this.level.blockEvent(this.getBlockPos(), this.getBlockState().getBlock(), 1, style.ordinal());
     }
