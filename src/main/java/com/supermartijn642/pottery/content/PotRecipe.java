@@ -4,12 +4,13 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
@@ -29,19 +30,30 @@ import java.util.stream.IntStream;
 /**
  * Created 01/12/2023 by SuperMartijn642
  */
-public class PotRecipe extends ShapedRecipe {
+public class PotRecipe implements CraftingRecipe {
 
-    public static final Serializer SERIALIZER = new Serializer();
+    public static final RecipeSerializer<PotRecipe> SERIALIZER = new RecipeSerializer<>(Serializer.CODEC, Serializer.STREAM_CODEC);
 
+    private final ShapedRecipe recipe;
+    private final ShapedRecipePattern pattern;
+    private final ItemStackTemplate output;
     private final Ingredient dyeIngredient;
     private final int[] sherdIndices;
-    private final ItemStack output;
 
-    public PotRecipe(String group, CraftingBookCategory category, ShapedRecipePattern pattern, ItemStack output, boolean showNotification, Ingredient dyeIngredient, int[] sherdIndices){
-        super(group, category, pattern, output, showNotification);
+    public PotRecipe(ShapedRecipe recipe, Ingredient dyeIngredient, int[] sherdIndices){
+        this.recipe = recipe;
+        this.pattern = recipe.pattern;
+        this.output = recipe.result;
         this.dyeIngredient = dyeIngredient;
         this.sherdIndices = sherdIndices;
-        this.output = output;
+    }
+
+    public int getWidth(){
+        return this.recipe.getWidth();
+    }
+
+    public int getHeight(){
+        return this.recipe.getHeight();
     }
 
     @Override
@@ -50,8 +62,8 @@ public class PotRecipe extends ShapedRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingInput input, HolderLookup.Provider provider){
-        ItemStack stack = super.assemble(input, provider);
+    public ItemStack assemble(CraftingInput input){
+        ItemStack stack = this.recipe.assemble(input);
 
         // Add the decorations
         PotDecorations decorations = this.findRecipeDecorations(input);
@@ -60,6 +72,16 @@ public class PotRecipe extends ShapedRecipe {
             stack.set(DataComponents.POT_DECORATIONS, decorations);
 
         return stack;
+    }
+
+    @Override
+    public boolean showNotification(){
+        return this.recipe.showNotification();
+    }
+
+    @Override
+    public String group(){
+        return this.recipe.group();
     }
 
     @Override
@@ -80,11 +102,6 @@ public class PotRecipe extends ShapedRecipe {
             new SlotDisplay.ItemStackSlotDisplay(this.output),
             new SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
         ));
-    }
-
-    @Override
-    public RecipeSerializer<PotRecipe> getSerializer(){
-        return SERIALIZER;
     }
 
     private PotDecorations findRecipeDecorations(CraftingInput input){
@@ -119,7 +136,7 @@ public class PotRecipe extends ShapedRecipe {
                 int relativeX = x - startX;
                 int relativeY = y - startY;
                 if(relativeX >= 0 && relativeY >= 0 && relativeX < this.getWidth() && relativeY < this.getHeight()){
-                    Optional<Ingredient> ingredient = this.getIngredients().get(mirrored ?
+                    Optional<Ingredient> ingredient = this.recipe.getIngredients().get(mirrored ?
                         this.getWidth() - relativeX - 1 + relativeY * this.getWidth() :
                         relativeX + relativeY * this.getWidth()
                     );
@@ -140,53 +157,60 @@ public class PotRecipe extends ShapedRecipe {
         return new PotDecorations(back, left, right, front);
     }
 
-    public static class Serializer implements RecipeSerializer<PotRecipe> {
+    @Override
+    public RecipeSerializer<? extends CraftingRecipe> getSerializer(){
+        return SERIALIZER;
+    }
+
+    @Override
+    public PlacementInfo placementInfo(){
+        return this.recipe.placementInfo();
+    }
+
+    @Override
+    public CraftingBookCategory category(){
+        return this.recipe.category();
+    }
+
+    @Override
+    public NonNullList<ItemStack> getRemainingItems(CraftingInput input){
+        return this.recipe.getRemainingItems(input);
+    }
+
+    @Override
+    public RecipeBookCategory recipeBookCategory(){
+        return this.recipe.recipeBookCategory();
+    }
+
+    private static class Serializer {
 
         private static final Function<Integer,DataResult<Integer>> GEQUAL_TO_ZERO = integer -> integer < 0 ? DataResult.error(() -> "Value '" + integer + "' is less than 0!") : DataResult.success(integer);
         private static final MapCodec<PotRecipe> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-            ShapedRecipe.Serializer.CODEC.fieldOf("recipe").forGetter(recipe -> null),
+            ShapedRecipe.MAP_CODEC.fieldOf("recipe").forGetter(recipe -> null),
             Ingredient.CODEC.optionalFieldOf("dye_ingredient").forGetter(recipe -> Optional.of(recipe.dyeIngredient)),
             Codec.INT.flatXmap(GEQUAL_TO_ZERO, GEQUAL_TO_ZERO).listOf().fieldOf("sherds").forGetter(recipe -> IntStream.of(recipe.sherdIndices).boxed().toList())
         ).apply(instance, (shapedRecipe, dyeIngredient, sherdIndices) -> new PotRecipe(
-            shapedRecipe.group(),
-            shapedRecipe.category(),
-            shapedRecipe.pattern,
-            shapedRecipe.assemble(null, null),
-            shapedRecipe.showNotification(),
+            shapedRecipe,
             dyeIngredient.orElse(null),
             sherdIndices.stream().mapToInt(i -> i).toArray()
         )));
         private static final StreamCodec<RegistryFriendlyByteBuf,PotRecipe> STREAM_CODEC = StreamCodec.of(Serializer::toNetwork, Serializer::fromNetwork);
 
-        @Override
-        public MapCodec<PotRecipe> codec(){
-            return CODEC;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf,PotRecipe> streamCodec(){
-            return STREAM_CODEC;
-        }
-
         public static PotRecipe fromNetwork(RegistryFriendlyByteBuf buffer){
-            ShapedRecipe shapedRecipe = RecipeSerializer.SHAPED_RECIPE.streamCodec().decode(buffer);
+            ShapedRecipe shapedRecipe = ShapedRecipe.STREAM_CODEC.decode(buffer);
             Ingredient dyeIngredient = buffer.readBoolean() ? Ingredient.CONTENTS_STREAM_CODEC.decode(buffer) : null;
             int[] sherdIndices = buffer.readVarIntArray(4);
             if(sherdIndices.length != 4)
                 throw new IllegalArgumentException();
             return new PotRecipe(
-                shapedRecipe.group(),
-                shapedRecipe.category(),
-                shapedRecipe.pattern,
-                shapedRecipe.assemble(null, null),
-                shapedRecipe.showNotification(),
+                shapedRecipe,
                 dyeIngredient,
                 sherdIndices
             );
         }
 
         public static void toNetwork(RegistryFriendlyByteBuf buffer, PotRecipe recipe){
-            RecipeSerializer.SHAPED_RECIPE.streamCodec().encode(buffer, recipe);
+            ShapedRecipe.STREAM_CODEC.encode(buffer, recipe.recipe);
             buffer.writeBoolean(recipe.dyeIngredient != null);
             if(recipe.dyeIngredient != null)
                 Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.dyeIngredient);

@@ -10,7 +10,6 @@ import com.supermartijn642.core.registry.Registries;
 import com.supermartijn642.pottery.Pottery;
 import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -47,7 +46,6 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
 
     @Override
     public void generate(){
-        HolderLookup.RegistryLookup<Item> lookup = ResourceGenerator.registryAccess.lookupOrThrow(net.minecraft.core.registries.Registries.ITEM);
         for(PotType type : PotType.values()){
             for(PotColor color : PotColor.values()){
                 RecipeBuilder recipe = this.recipe(type.getIdentifier(color));

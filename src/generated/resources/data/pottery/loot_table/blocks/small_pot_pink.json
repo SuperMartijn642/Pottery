@@ -7,6 +7,7 @@
         {
           "children": [
             {
+              "name": "minecraft:sherds",
               "conditions": [
                 {
                   "block": "pottery:small_pot_pink",
@@ -16,10 +17,10 @@
                   "condition": "minecraft:block_state_property"
                 }
               ],
-              "name": "minecraft:sherds",
               "type": "minecraft:dynamic"
             },
             {
+              "name": "pottery:small_pot_pink",
               "functions": [
                 {
                   "source": "block_entity",
@@ -29,7 +30,6 @@
                   "function": "minecraft:copy_components"
                 }
               ],
-              "name": "pottery:small_pot_pink",
               "type": "minecraft:item"
             }
           ],

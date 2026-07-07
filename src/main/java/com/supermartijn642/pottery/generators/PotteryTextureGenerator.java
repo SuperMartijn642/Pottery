@@ -80,7 +80,7 @@ public class PotteryTextureGenerator extends ResourceGenerator {
     }
 
     private BufferedImage readImage(Identifier file){
-        IModFileInfo modFile = ModList.get().getModFileById(file.getNamespace());
+        IModFileInfo modFile = ModList.getModFileById(file.getNamespace());
         if(modFile == null)
             throw new RuntimeException("Could not find mod for namespace '" + file.getNamespace() + "' for texture '" + file + "'!");
         Path filePath = modFile.getFile().findResource("assets", file.getNamespace(), "textures", file.getPath() + ".png");

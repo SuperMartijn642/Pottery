@@ -73,7 +73,7 @@ public enum PotColor {
     }
 
     public Identifier getPatternLocation(ResourceKey<DecoratedPotPattern> key){
-        Identifier texture = Sheets.DECORATED_POT_MATERIALS.get(key).texture();
+        Identifier texture = Sheets.getDecoratedPotSprite(key).texture();
         if(this == BLANK)
             return texture;
 
