@@ -35,8 +35,7 @@ public class PotteryJeiPlugin implements IModPlugin {
             public void onDisplayedIngredientsUpdate(RecipeHolder<PotRecipe> recipeHolder, List<IRecipeSlotDrawable> recipeSlots, IFocusGroup focuses){
                 // Update the output stack for the currently shown sherds
                 ItemStack decoratedPot = recipeHolder.value().assemble(
-                    CraftingInput.of(3, 3, recipeSlots.stream().skip(1).map(display -> display.getDisplayedItemStack().orElse(ItemStack.EMPTY)).toList()),
-                    null
+                    CraftingInput.of(3, 3, recipeSlots.stream().skip(1).map(display -> display.getDisplayedItemStack().orElse(ItemStack.EMPTY)).toList())
                 );
                 recipeSlots.getFirst().createDisplayOverrides().add(decoratedPot);
             }

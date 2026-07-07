@@ -2,6 +2,7 @@ package com.supermartijn642.pottery.content;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -67,8 +68,9 @@ public class PotEventHandlers {
 
         // Coloring
         ItemStack stack = player.getItemInHand(hand);
-        if(stack.getItem() instanceof DyeItem){
-            PotColor color = PotColor.colorForDye(((DyeItem)stack.getItem()).getDyeColor());
+        DyeColor dye = stack.get(DataComponents.DYE);
+        if(dye != null){
+            PotColor color = PotColor.colorForDye(dye);
             if(color == null || color == PotColor.BLANK)
                 return InteractionResult.CONSUME;
 

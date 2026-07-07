@@ -4,21 +4,24 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.BlockAndTintGetter;
-import net.minecraft.world.level.EmptyBlockAndTintGetter;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
-import net.neoforged.neoforge.client.RenderTypeHelper;
+import net.minecraft.world.level.block.state.BlockState;
+import org.joml.Matrix4f;
+import org.joml.Matrix4fc;
 
 import java.util.List;
 
@@ -27,7 +30,7 @@ import java.util.List;
  */
 public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntity,PotBlockRenderer.State> {
 
-    private static final RandomSource RANDOM_SOURCE = RandomSource.create();
+    private static final Matrix4fc IDENTITY_MATRIX = new Matrix4f().identity();
 
     @Override
     public State createStateHolder(){
@@ -42,13 +45,18 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
             //noinspection DataFlowIssue
             state.wobble = (entity.getLevel().getGameTime() - entity.wobbleStartedAtTick + context.partialTicks()) / wobbleStyle.duration;
         state.facing = entity.getFacing();
-
-        // Collect model parts here since block model needs world context
-        BlockAndTintGetter level = entity.getLevel() == null ? EmptyBlockAndTintGetter.INSTANCE : entity.getLevel();
+        state.blockRenderState.clear();
+        BlockState blockState = entity.getBlockState();
         BlockPos pos = entity.getBlockPos();
-        RANDOM_SOURCE.setSeed(entity.getBlockState().getSeed(pos));
-        BlockStateModel model = ClientUtils.getBlockRenderer().getBlockModel(entity.getBlockState());
-        state.modelParts = model.collectParts(level, pos, entity.getBlockState(), RANDOM_SOURCE);
+        BlockAndTintGetter level = entity.getLevel() instanceof BlockAndTintGetter l ? l : BlockAndTintGetter.EMPTY;
+        BlockStateModel model = ClientUtils.getMinecraft().getModelManager().getBlockStateModelSet().get(blockState);
+        long seed = blockState.getSeed(pos);
+        List<BlockStateModelPart> parts = state.blockRenderState.setupModel(IDENTITY_MATRIX, model.hasMaterialFlag(level, pos, blockState, BakedQuad.FLAG_TRANSLUCENT));
+        RandomSource random = context.randomSource(seed);
+        model.collectParts(level, pos, blockState, random, parts);
+        IntList tintLayers = state.blockRenderState.tintLayers();
+        for(BlockTintSource tintSource : ClientUtils.getMinecraft().getBlockColors().getTintSources(blockState))
+            tintLayers.add(tintSource.colorInWorld(blockState, level, pos));
     }
 
     @Override
@@ -76,25 +84,7 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
 
         // Render the regular block
         ModelFeatureRenderer.CrumblingOverlay breakingOverlay = context.breakingOverlay();
-        output.submitBlockModel(
-            poseStack,
-            RenderTypeHelper.getEntityRenderType(ChunkSectionLayer.SOLID),
-            new BlockStateModel() {
-                @Override
-                public void collectParts(RandomSource random, List<BlockModelPart> parts){
-                    parts.addAll(state.modelParts);
-                }
-
-                @Override
-                public TextureAtlasSprite particleIcon(){
-                    throw new AssertionError();
-                }
-            },
-            1, 1, 1,
-            context.packedLight(),
-            breakingOverlay == null ? OverlayTexture.NO_OVERLAY : breakingOverlay.progress(),
-            0
-        );
+        state.blockRenderState.submit(poseStack, output, context.packedLight(), breakingOverlay == null ? OverlayTexture.NO_OVERLAY : breakingOverlay.progress(), 0);
 
         poseStack.popPose();
     }
@@ -103,6 +93,6 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
         private DecoratedPotBlockEntity.WobbleStyle wobbleStyle;
         private float wobble;
         private Direction facing;
-        private List<BlockModelPart> modelParts;
+        private final BlockModelRenderState blockRenderState = new BlockModelRenderState();
     }
 }
