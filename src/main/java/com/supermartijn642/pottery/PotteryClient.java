@@ -22,7 +22,7 @@ public class PotteryClient implements ClientModInitializer {
             for(PotColor color : PotColor.values()){
                 if(type == PotType.DEFAULT && color == PotColor.BLANK)
                     continue;
-                handler.registerBlockModelOverwrite(() -> type.getBlock(color), PotBakedModel::new);
+                handler.registerBlockStateModelOverwrite(() -> type.getBlock(color), PotBakedModel::new);
             }
         }
         // Register pot item model

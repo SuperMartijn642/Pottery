@@ -3,12 +3,16 @@ package com.supermartijn642.pottery.content;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.util.Pair;
 import com.supermartijn642.pottery.Pottery;
-import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.model.geom.builders.UVPair;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.BlockModelPart;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.block.BlockAndTintGetter;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
+import net.minecraft.client.renderer.block.dispatch.BlockStateModelPart;
+import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -20,7 +24,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.DecoratedPotPattern;
@@ -29,6 +32,7 @@ import net.minecraft.world.level.block.entity.PotDecorations;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -44,12 +48,15 @@ public class PotBakedModel implements BlockStateModel {
     private static final ThreadLocal<PotData> MODEL_DATA = new ThreadLocal<>();
 
     private final BlockStateModel original;
-    private final List<BlockModelPart> parts;
+    private final List<BlockStateModelPart> parts;
 
     public PotBakedModel(BlockStateModel original){
         this.original = original;
-        this.parts = original == null ? List.of() : original.collectParts(RandomSource.create(42)).stream()
-            .<BlockModelPart>map(part -> new BlockModelPart() {
+        List<BlockStateModelPart> parts = new ArrayList<>();
+        if(original != null)
+            original.collectParts(RandomSource.create(42), parts);
+        this.parts = parts.stream()
+            .<BlockStateModelPart>map(part -> new BlockStateModelPart() {
                 @Override
                 public List<BakedQuad> getQuads(@Nullable Direction cullDirection){
                     return PotBakedModel.getBlockQuads(part.getQuads(cullDirection));
@@ -61,8 +68,13 @@ public class PotBakedModel implements BlockStateModel {
                 }
 
                 @Override
-                public TextureAtlasSprite particleIcon(){
-                    return part.particleIcon();
+                public Material.Baked particleMaterial(){
+                    return part.particleMaterial();
+                }
+
+                @Override
+                public @BakedQuad.MaterialFlags int materialFlags(){
+                    return part.materialFlags();
                 }
             })
             .toList();
@@ -94,7 +106,7 @@ public class PotBakedModel implements BlockStateModel {
     }
 
     @Override
-    public void collectParts(RandomSource randomSource, List<BlockModelPart> list){
+    public void collectParts(RandomSource randomSource, List<BlockStateModelPart> list){
         list.addAll(this.parts);
     }
 
@@ -124,7 +136,7 @@ public class PotBakedModel implements BlockStateModel {
         if(quad.direction().getAxis().isVertical())
             return quad;
 
-        TextureAtlasSprite sprite = quad.sprite();
+        TextureAtlasSprite sprite = quad.materialInfo().sprite();
         Identifier spriteName = sprite.contents().name();
         // Swap pattern
         if(DUMMY_PATTERN_SPRITE.equals(spriteName)){
@@ -164,17 +176,31 @@ public class PotBakedModel implements BlockStateModel {
         return new BakedQuad(
             quad.position0(), quad.position1(), quad.position2(), quad.position3(),
             uvs[0], uvs[1], uvs[2], uvs[3],
-            quad.tintIndex(),
             quad.direction(),
-            newSprite,
-            quad.shade(),
-            quad.lightEmission()
+            new BakedQuad.MaterialInfo(
+                newSprite,
+                ChunkSectionLayer.byTransparency(newSprite.transparency()),
+                newSprite.transparency().hasTranslucent() ? Sheets.translucentBlockItemSheet() : Sheets.cutoutBlockItemSheet(),
+                quad.materialInfo().tintIndex(),
+                quad.materialInfo().shade(),
+                quad.materialInfo().lightEmission()
+            )
         );
     }
 
     @Override
-    public TextureAtlasSprite particleIcon(){
-        return this.original.particleIcon();
+    public Material.Baked particleMaterial(){
+        return this.original.particleMaterial();
+    }
+
+    @Override
+    public @BakedQuad.MaterialFlags int materialFlags(){
+        return this.original.materialFlags();
+    }
+
+    @Override
+    public boolean hasMaterialFlag(@BakedQuad.MaterialFlags int flag){
+        return this.original.hasMaterialFlag(flag);
     }
 
     private record PotData(PotType type, PotColor color, Direction facing, PotDecorations decorations) {

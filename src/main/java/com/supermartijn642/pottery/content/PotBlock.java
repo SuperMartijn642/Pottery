@@ -22,7 +22,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.DyeItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -91,8 +91,9 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     protected InteractionFeedback interact(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, Direction hitSide, Vec3 hitLocation){
         // Coloring
         ItemStack stack = player.getItemInHand(hand);
-        if(stack.getItem() instanceof DyeItem){
-            PotColor color = PotColor.colorForDye(((DyeItem)stack.getItem()).getDyeColor());
+        DyeColor dye = stack.get(DataComponents.DYE);
+        if(dye != null){
+            PotColor color = PotColor.colorForDye(dye);
             if(color == null || color == this.color)
                 return InteractionFeedback.CONSUME;
 
@@ -255,10 +256,11 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
         if(decorations != null && !decorations.equals(PotDecorations.EMPTY)){
             info.accept(CommonComponents.EMPTY);
             info.accept(TextComponents.string("Patterns:").color(ChatFormatting.GRAY).get());
-            info.accept(TextComponents.string(" Front: ").color(ChatFormatting.DARK_GRAY).append(decorations.front().orElse(Items.BRICK).getName().plainCopy().withStyle(decorations.front().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Left: ").color(ChatFormatting.DARK_GRAY).append(decorations.left().orElse(Items.BRICK).getName().plainCopy().withStyle(decorations.left().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Right: ").color(ChatFormatting.DARK_GRAY).append(decorations.right().orElse(Items.BRICK).getName().plainCopy().withStyle(decorations.right().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Back: ").color(ChatFormatting.DARK_GRAY).append(decorations.back().orElse(Items.BRICK).getName().plainCopy().withStyle(decorations.back().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
+            ItemStack brick = Items.BRICK.getDefaultInstance();
+            info.accept(TextComponents.string(" Front: ").color(ChatFormatting.DARK_GRAY).append(decorations.front().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.front().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
+            info.accept(TextComponents.string(" Left: ").color(ChatFormatting.DARK_GRAY).append(decorations.left().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.left().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
+            info.accept(TextComponents.string(" Right: ").color(ChatFormatting.DARK_GRAY).append(decorations.right().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.right().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
+            info.accept(TextComponents.string(" Back: ").color(ChatFormatting.DARK_GRAY).append(decorations.back().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.back().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
         }
     }
 
