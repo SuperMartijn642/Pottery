@@ -6,7 +6,7 @@
     2,
     1
   ],
-  "dye_ingredient": "minecraft:red_dye",
+  "dye_ingredient": "#c:dyes/red",
   "recipe": {
     "show_notification": true,
     "pattern": [

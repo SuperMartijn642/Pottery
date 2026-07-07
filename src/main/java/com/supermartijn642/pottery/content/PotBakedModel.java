@@ -1,5 +1,6 @@
 package com.supermartijn642.pottery.content;
 
+import com.google.common.collect.ImmutableMap;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.util.Pair;
 import com.supermartijn642.pottery.Pottery;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -44,6 +46,13 @@ public class PotBakedModel implements BlockStateModel {
 
     private static final Identifier DUMMY_PATTERN_SPRITE = Identifier.fromNamespaceAndPath(Pottery.MODID, "dummy_pattern");
     private static final PotData DEFAULT_POT_DATA = new PotData(PotType.DEFAULT, PotColor.BLANK, Direction.NORTH, PotDecorations.EMPTY);
+    private static final Map<ResourceKey<Item>,ResourceKey<DecoratedPotPattern>> PATTERNS;
+
+    static {
+        ImmutableMap.Builder<ResourceKey<Item>,ResourceKey<DecoratedPotPattern>> builder = ImmutableMap.builder();
+        DecoratedPotPatterns.itemToPatternMappings(builder::put);
+        PATTERNS = builder.build();
+    }
 
     private static final ThreadLocal<PotData> MODEL_DATA = new ThreadLocal<>();
 
@@ -142,7 +151,8 @@ public class PotBakedModel implements BlockStateModel {
         if(DUMMY_PATTERN_SPRITE.equals(spriteName)){
             // Find the correct decoration for the quad's side of the pot
             Item decorationItem = DecorationUtils.getDecorationItem(data.decorations, data.facing, quad.direction()).orElse(Items.BRICK);
-            ResourceKey<DecoratedPotPattern> decorationKey = DecoratedPotPatterns.getPatternFromItem(decorationItem);
+            //noinspection deprecation
+            ResourceKey<DecoratedPotPattern> decorationKey = PATTERNS.get(decorationItem.builtInRegistryHolder().key());
             if(decorationKey == null)
                 return quad;
 

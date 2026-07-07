@@ -6,7 +6,7 @@
     2,
     1
   ],
-  "dye_ingredient": "minecraft:orange_dye",
+  "dye_ingredient": "#c:dyes/orange",
   "recipe": {
     "show_notification": true,
     "pattern": [

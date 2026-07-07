@@ -1,45 +1,46 @@
 package com.supermartijn642.pottery.content;
 
 import com.supermartijn642.pottery.Pottery;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.client.renderer.Sheets;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 
 import java.util.Locale;
-import java.util.function.Supplier;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
  */
 public enum PotColor {
     BLANK(null, 0, 100, 0, null),
-    WHITE("White", 0, 0, 25, () -> Ingredient.of(Items.WHITE_DYE)),
-    ORANGE("Orange", 0, 130, 0, () -> Ingredient.of(Items.ORANGE_DYE)),
-    MAGENTA("Magenta", -70, 115, 0, () -> Ingredient.of(Items.MAGENTA_DYE)),
-    LIGHT_BLUE("Light Blue", -170, 110, 0, () -> Ingredient.of(Items.LIGHT_BLUE_DYE)),
-    YELLOW("Yellow", 35, 120, 0, () -> Ingredient.of(Items.YELLOW_DYE)),
-    LIME("Lime", 75, 125, 0, () -> Ingredient.of(Items.LIME_DYE)),
-    PINK("Pink", -35, 115, 5, () -> Ingredient.of(Items.PINK_DYE)),
-    GRAY("Gray", 0, 0, -25, () -> Ingredient.of(Items.GRAY_DYE)),
-    LIGHT_GRAY("Light Gray", 0, 0, 0, () -> Ingredient.of(Items.LIGHT_GRAY_DYE)),
-    CYAN("Cyan", 155, 100, 0, () -> Ingredient.of(Items.CYAN_DYE)),
-    PURPLE("Purple", -95, 120, 0, () -> Ingredient.of(Items.PURPLE_DYE)),
-    BLUE("Blue", -145, 115, -5, () -> Ingredient.of(Items.BLUE_DYE)),
-    BROWN("Brown", 0, 125, -30, () -> Ingredient.of(Items.BROWN_DYE)),
-    GREEN("Green", 95, 120, -20, () -> Ingredient.of(Items.GREEN_DYE)),
-    RED("Red", -10, 140, -20, () -> Ingredient.of(Items.RED_DYE)),
-    BLACK("Black", 0, 0, -60, () -> Ingredient.of(Items.BLACK_DYE));
+    WHITE("White", 0, 0, 25, ConventionalItemTags.WHITE_DYES),
+    ORANGE("Orange", 0, 130, 0, ConventionalItemTags.ORANGE_DYES),
+    MAGENTA("Magenta", -70, 115, 0, ConventionalItemTags.MAGENTA_DYES),
+    LIGHT_BLUE("Light Blue", -170, 110, 0, ConventionalItemTags.LIGHT_BLUE_DYES),
+    YELLOW("Yellow", 35, 120, 0, ConventionalItemTags.YELLOW_DYES),
+    LIME("Lime", 75, 125, 0, ConventionalItemTags.LIME_DYES),
+    PINK("Pink", -35, 115, 5, ConventionalItemTags.PINK_DYES),
+    GRAY("Gray", 0, 0, -25, ConventionalItemTags.GRAY_DYES),
+    LIGHT_GRAY("Light Gray", 0, 0, 0, ConventionalItemTags.LIGHT_GRAY_DYES),
+    CYAN("Cyan", 155, 100, 0, ConventionalItemTags.CYAN_DYES),
+    PURPLE("Purple", -95, 120, 0, ConventionalItemTags.PURPLE_DYES),
+    BLUE("Blue", -145, 115, -5, ConventionalItemTags.BLUE_DYES),
+    BROWN("Brown", 0, 125, -30, ConventionalItemTags.BROWN_DYES),
+    GREEN("Green", 95, 120, -20, ConventionalItemTags.GREEN_DYES),
+    RED("Red", -10, 140, -20, ConventionalItemTags.RED_DYES),
+    BLACK("Black", 0, 0, -60, ConventionalItemTags.BLACK_DYES);
 
     private final String identifier;
     private final String translation;
     private final int hueShift, saturationShift, brightnessShift;
-    private final Supplier<Ingredient> dyeIngredient;
+    private final TagKey<Item> dyeIngredient;
 
-    PotColor(String translation, int hueShift, int saturationShift, int brightnessShift, Supplier<Ingredient> dyeIngredient){
+    PotColor(String translation, int hueShift, int saturationShift, int brightnessShift, TagKey<Item> dyeIngredient){
         this.dyeIngredient = dyeIngredient;
         this.identifier = this.name().toLowerCase(Locale.ROOT);
         this.translation = translation;
@@ -68,12 +69,13 @@ public enum PotColor {
         return this.brightnessShift;
     }
 
-    public Ingredient getDyeIngredient(){
-        return this.dyeIngredient.get();
+    public TagKey<Item> getDyeIngredient(){
+        return this.dyeIngredient;
     }
 
     public Identifier getPatternLocation(ResourceKey<DecoratedPotPattern> key){
-        Identifier texture = Sheets.getDecoratedPotSprite(key).texture();
+        DecoratedPotPattern pattern = BuiltInRegistries.DECORATED_POT_PATTERN.getOrThrow(key).value();
+        Identifier texture = Sheets.DECORATED_POT_MAPPER.apply(pattern.assetId()).texture();
         if(this == BLANK)
             return texture;
 

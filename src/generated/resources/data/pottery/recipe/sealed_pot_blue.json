@@ -6,7 +6,7 @@
     5,
     3
   ],
-  "dye_ingredient": "minecraft:blue_dye",
+  "dye_ingredient": "#c:dyes/blue",
   "recipe": {
     "show_notification": true,
     "pattern": [
