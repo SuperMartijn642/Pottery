@@ -6,7 +6,7 @@
     2,
     0
   ],
-  "dye_ingredient": "minecraft:magenta_dye",
+  "dye_ingredient": "#c:dyes/magenta",
   "recipe": {
     "show_notification": true,
     "pattern": [

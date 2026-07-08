@@ -6,7 +6,7 @@
     5,
     3
   ],
-  "dye_ingredient": "minecraft:white_dye",
+  "dye_ingredient": "#c:dyes/white",
   "recipe": {
     "show_notification": true,
     "pattern": [

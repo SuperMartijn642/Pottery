@@ -6,7 +6,7 @@
     2,
     1
   ],
-  "dye_ingredient": "minecraft:yellow_dye",
+  "dye_ingredient": "#c:dyes/yellow",
   "recipe": {
     "show_notification": true,
     "pattern": [
