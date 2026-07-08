@@ -6,7 +6,7 @@
     2,
     1
   ],
-  "dye_ingredient": "minecraft:gray_dye",
+  "dye_ingredient": "#c:dyes/gray",
   "recipe": {
     "show_notification": true,
     "pattern": [

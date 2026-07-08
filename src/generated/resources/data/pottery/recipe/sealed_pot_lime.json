@@ -6,7 +6,7 @@
     5,
     3
   ],
-  "dye_ingredient": "minecraft:lime_dye",
+  "dye_ingredient": "#c:dyes/lime",
   "recipe": {
     "show_notification": true,
     "pattern": [

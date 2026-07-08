@@ -6,7 +6,7 @@
     5,
     3
   ],
-  "dye_ingredient": "minecraft:brown_dye",
+  "dye_ingredient": "#c:dyes/brown",
   "recipe": {
     "show_notification": true,
     "pattern": [

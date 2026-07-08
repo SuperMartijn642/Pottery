@@ -1,7 +1,9 @@
 package com.supermartijn642.pottery.generators;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import com.supermartijn642.core.generator.ResourceCache;
 import com.supermartijn642.core.generator.ResourceGenerator;
@@ -92,6 +94,7 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
 
     @Override
     public void save(){
+        DynamicOps<JsonElement> ops = ResourceGenerator.registryAccess.createSerializationContext(JsonOps.INSTANCE);
         for(Map.Entry<Identifier,RecipeBuilder> entry : this.recipes.entrySet()){
             Identifier location = entry.getKey();
             RecipeBuilder recipe = entry.getValue();
@@ -106,7 +109,7 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
             sherds.add(recipe.sherdIndices[3]);
             json.add("sherds", sherds);
             if(recipe.dyeIngredient != null)
-                json.add("dye_ingredient", Ingredient.CODEC.encodeStart(JsonOps.INSTANCE, recipe.dyeIngredient).getOrThrow());
+                json.add("dye_ingredient", Ingredient.CODEC.encodeStart(ops, recipe.dyeIngredient).getOrThrow());
             JsonObject recipeJson = new JsonObject();
             recipeJson.addProperty("show_notification", true);
             JsonArray pattern = new JsonArray();
@@ -180,6 +183,11 @@ public class PotteryRecipeGenerator extends ResourceGenerator {
 
         public RecipeBuilder dye(Item dye){
             this.dye(Ingredient.of(dye));
+            return this;
+        }
+
+        public RecipeBuilder dye(TagKey<Item> tag){
+            this.dye(Ingredient.of(ResourceGenerator.registryAccess.getOrThrow(tag)));
             return this;
         }
 

@@ -6,7 +6,7 @@
     5,
     3
   ],
-  "dye_ingredient": "minecraft:pink_dye",
+  "dye_ingredient": "#c:dyes/pink",
   "recipe": {
     "show_notification": true,
     "pattern": [
