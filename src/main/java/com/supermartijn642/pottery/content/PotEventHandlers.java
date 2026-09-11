@@ -3,8 +3,10 @@ package com.supermartijn642.pottery.content;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -94,13 +96,13 @@ public class PotEventHandlers {
         if(hitSide.getAxis().isHorizontal()){
             if(stack.is(ItemTags.DECORATED_POT_INGREDIENTS) && level.getBlockEntity(pos) instanceof DecoratedPotBlockEntity entity){
                 PotDecorations decorations = entity.getDecorations();
-                Optional<Item> oldItem = DecorationUtils.getDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide);
-                if(stack.is(oldItem.orElse(Items.BRICK)))
+                Optional<ItemStackTemplate> oldItem = DecorationUtils.getDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide);
+                if(stack.is(oldItem.map(ItemStackTemplate::item).map(Holder::value).orElse(Items.BRICK)))
                     return InteractionResult.CONSUME;
 
                 if(!level.isClientSide()){
                     // Update the decorations
-                    entity.decorations = DecorationUtils.setDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide, Optional.of(stack.getItem()));
+                    entity.decorations = DecorationUtils.setDecorationItem(decorations, state.getValue(PotBlock.HORIZONTAL_FACING), hitSide, Optional.of(ItemStackTemplate.fromNonEmptyStack(stack)));
                     entity.setChanged();
                     level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
                     if(!player.isCreative()){
@@ -109,7 +111,7 @@ public class PotEventHandlers {
                         stack.shrink(1);
                         player.setItemInHand(hand, stack);
                         // Re-add the previous item
-                        player.getInventory().placeItemBackInInventory(oldItem.orElse(Items.BRICK).getDefaultInstance());
+                        player.getInventory().placeItemBackInInventory(oldItem.map(ItemStackTemplate::create).orElse(Items.BRICK.getDefaultInstance()), Prediction.SERVER_ONLY);
                     }
                 }
                 return InteractionResult.SUCCESS;

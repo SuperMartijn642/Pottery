@@ -8,7 +8,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
@@ -150,11 +149,16 @@ public class PotRecipe implements CraftingRecipe {
         if(this.dyeIngredient != null && !foundDye)
             return null;
 
-        Item front = input.getItem(startX + this.sherdIndices[0] % this.getWidth() + (startY + this.sherdIndices[0] / this.getWidth()) * input.width()).getItem();
-        Item left = input.getItem(startX + this.sherdIndices[1] % this.getWidth() + (startY + this.sherdIndices[1] / this.getWidth()) * input.width()).getItem();
-        Item right = input.getItem(startX + this.sherdIndices[2] % this.getWidth() + (startY + this.sherdIndices[2] / this.getWidth()) * input.width()).getItem();
-        Item back = input.getItem(startX + this.sherdIndices[3] % this.getWidth() + (startY + this.sherdIndices[3] / this.getWidth()) * input.width()).getItem();
-        return new PotDecorations(back, left, right, front);
+        ItemStack front = input.getItem(startX + this.sherdIndices[0] % this.getWidth() + (startY + this.sherdIndices[0] / this.getWidth()) * input.width());
+        ItemStack left = input.getItem(startX + this.sherdIndices[1] % this.getWidth() + (startY + this.sherdIndices[1] / this.getWidth()) * input.width());
+        ItemStack right = input.getItem(startX + this.sherdIndices[2] % this.getWidth() + (startY + this.sherdIndices[2] / this.getWidth()) * input.width());
+        ItemStack back = input.getItem(startX + this.sherdIndices[3] % this.getWidth() + (startY + this.sherdIndices[3] / this.getWidth()) * input.width());
+        return new PotDecorations(
+            Optional.of(back).filter(s -> !s.isEmpty()).map(ItemStackTemplate::fromNonEmptyStack),
+            Optional.of(left).filter(s -> !s.isEmpty()).map(ItemStackTemplate::fromNonEmptyStack),
+            Optional.of(right).filter(s -> !s.isEmpty()).map(ItemStackTemplate::fromNonEmptyStack),
+            Optional.of(front).filter(s -> !s.isEmpty()).map(ItemStackTemplate::fromNonEmptyStack)
+        );
     }
 
     @Override

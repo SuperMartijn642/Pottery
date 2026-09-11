@@ -1,6 +1,9 @@
 {
   "model": {
-    "model": "pottery:block/wide_pot/wide_pot_cyan",
-    "type": "pottery:decorated_pot"
+    "base": "pottery:block/wide_pot/wide_pot_cyan",
+    "model": {
+      "type": "pottery:decorated_pot"
+    },
+    "type": "minecraft:special"
   }
 }

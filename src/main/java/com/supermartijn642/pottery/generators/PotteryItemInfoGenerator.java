@@ -4,7 +4,7 @@ import com.supermartijn642.core.generator.ItemInfoGenerator;
 import com.supermartijn642.core.generator.ResourceCache;
 import com.supermartijn642.pottery.Pottery;
 import com.supermartijn642.pottery.content.PotColor;
-import com.supermartijn642.pottery.content.PotItemModel;
+import com.supermartijn642.pottery.content.PotSpecialModelRenderer;
 import com.supermartijn642.pottery.content.PotType;
 import net.minecraft.resources.Identifier;
 
@@ -25,7 +25,11 @@ public class PotteryItemInfoGenerator extends ItemInfoGenerator {
                     continue;
                 // Item model
                 this.info(type.getItem(color))
-                    .model(new PotItemModel(Identifier.fromNamespaceAndPath(Pottery.MODID, "block/" + type.getIdentifier() + "/" + type.getIdentifier(color))));
+                    .model(this.specialModel(
+                        PotSpecialModelRenderer.UNBAKED,
+                        Identifier.fromNamespaceAndPath(Pottery.MODID, "block/" + type.getIdentifier() + "/" + type.getIdentifier(color)),
+                        null
+                    ));
             }
         }
     }

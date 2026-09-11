@@ -2,14 +2,10 @@ package com.supermartijn642.pottery.content;
 
 import com.supermartijn642.pottery.Pottery;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.client.renderer.Sheets;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.entity.DecoratedPotPattern;
 
 import java.util.Locale;
 
@@ -73,13 +69,12 @@ public enum PotColor {
         return this.dyeIngredient;
     }
 
-    public Identifier getPatternLocation(ResourceKey<DecoratedPotPattern> key){
-        DecoratedPotPattern pattern = BuiltInRegistries.DECORATED_POT_PATTERN.getOrThrow(key).value();
-        Identifier texture = Sheets.DECORATED_POT_MAPPER.apply(pattern.assetId()).texture();
+    public Identifier getPatternLocation(Identifier pattern){
+        Identifier texture = pattern.withPrefix("entity/decorated_pot/");
         if(this == BLANK)
             return texture;
 
-        if(key.identifier().getNamespace().equals("minecraft"))
+        if(pattern.getNamespace().equals("minecraft"))
             return Identifier.fromNamespaceAndPath(Pottery.MODID, "patterns/" + this.getIdentifier() + "/" + texture.getPath().substring(texture.getPath().lastIndexOf('/') + 1));
 
         return texture;

@@ -4,31 +4,28 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.supermartijn642.core.ClientUtils;
 import com.supermartijn642.core.render.CustomBlockEntityRenderer;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import net.fabricmc.fabric.api.client.renderer.v1.mesh.QuadEmitter;
 import net.minecraft.client.color.block.BlockTintSource;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.BlockModelRenderState;
-import net.minecraft.client.renderer.block.dispatch.BlockStateModel;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import org.joml.Matrix4f;
-import org.joml.Matrix4fc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 27/12/2023 by SuperMartijn642
  */
 public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntity,PotBlockRenderer.State> {
-
-    private static final Matrix4fc IDENTITY_MATRIX = new Matrix4f().identity();
 
     @Override
     public State createStateHolder(){
@@ -43,19 +40,30 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
             //noinspection DataFlowIssue
             state.wobble = (entity.getLevel().getGameTime() - entity.wobbleStartedAtTick + context.partialTicks()) / wobbleStyle.duration;
         state.facing = entity.getFacing();
-        state.blockRenderState.clear();
+        state.regularQuads.clear();
+        state.patternQuads.clear();
         BlockState blockState = entity.getBlockState();
+        PotBlock block = (PotBlock)blockState.getBlock();
         BlockPos pos = entity.getBlockPos();
-        BlockAndTintGetter level = entity.getLevel() instanceof BlockAndTintGetter l ? l : BlockAndTintGetter.EMPTY;
-        BlockStateModel model = ClientUtils.getMinecraft().getModelManager().getBlockStateModelSet().get(blockState);
-        long seed = blockState.getSeed(pos);
-        RandomSource random = context.randomSource(seed);
-        QuadEmitter emitter = state.blockRenderState.setupMesh(IDENTITY_MATRIX, model.hasMaterialFlag(level, pos, blockState, random, BakedQuad.FLAG_TRANSLUCENT));
-        random.setSeed(seed);
-        model.emitQuads(emitter, level, pos, blockState, random, _ -> false);
-        IntList tintLayers = state.blockRenderState.tintLayers();
-        for(BlockTintSource tintSource : ClientUtils.getMinecraft().getBlockColors().getTintSources(blockState))
-            tintLayers.add(tintSource.colorInWorld(blockState, level, pos));
+        PotModelHelper.collectQuads(
+            block.getType(),
+            block.getColor(),
+            blockState.getValue(PotBlock.HORIZONTAL_FACING),
+            entity.getDecorations(),
+            state.regularQuads::add,
+            state.patternQuads::add,
+            context.randomSource(blockState.getSeed(pos))
+        );
+        if(state.tintLayers != null)
+            state.tintLayers.clear();
+        List<BlockTintSource> tintSources = ClientUtils.getMinecraft().getBlockColors().getTintSources(blockState);
+        if(!tintSources.isEmpty()){
+            if(state.tintLayers == null)
+                state.tintLayers = new IntArrayList(tintSources.size());
+            BlockAndTintGetter level = entity.getLevel() instanceof BlockAndTintGetter l ? l : BlockAndTintGetter.EMPTY;
+            for(BlockTintSource tintSource : tintSources)
+                state.tintLayers.add(tintSource.colorInWorld(blockState, level, pos));
+        }
     }
 
     @Override
@@ -65,33 +73,43 @@ public class PotBlockRenderer implements CustomBlockEntityRenderer<PotBlockEntit
 
         if(state.wobbleStyle != null && state.wobble >= 0 && state.wobble <= 1){
             poseStack.translate(0.5, 0.0, 0.5);
-            poseStack.mulPose(Axis.YP.rotationDegrees(180 - state.facing.toYRot()));
+            poseStack.rotateDegrees(Axis.YP, 180 - state.facing.toYRot());
             if(state.wobbleStyle == DecoratedPotBlockEntity.WobbleStyle.POSITIVE){
                 float rotation = state.wobble * ((float)Math.PI * 2);
                 float xAxis = -1.5f * (Mth.cos(rotation) + 0.5f) * Mth.sin(rotation / 2);
-                poseStack.mulPose(Axis.XP.rotation(xAxis * 0.015625f));
+                poseStack.rotate(Axis.XP, xAxis * 0.015625f);
                 float zAxis = Mth.sin(rotation);
-                poseStack.mulPose(Axis.ZP.rotation(zAxis * 0.015625f));
+                poseStack.rotate(Axis.ZP, zAxis * 0.015625f);
             }else{
                 float h = Mth.sin(-state.wobble * 3 * (float)Math.PI) * 0.125f;
                 float k = 1 - state.wobble;
-                poseStack.mulPose(Axis.YP.rotation(h * k));
+                poseStack.rotate(Axis.YP, h * k);
             }
-            poseStack.mulPose(Axis.YP.rotationDegrees(state.facing.toYRot() - 180));
+            poseStack.rotateDegrees(Axis.YP, state.facing.toYRot() - 180);
             poseStack.translate(-0.5, 0.0, -0.5);
         }
 
-        // Render the regular block
+        // Render the block
         ModelFeatureRenderer.CrumblingOverlay breakingOverlay = context.breakingOverlay();
-        state.blockRenderState.submit(poseStack, output, context.packedLight(), breakingOverlay == null ? OverlayTexture.NO_OVERLAY : breakingOverlay.progress(), 0);
+        int[] tintLayers = state.tintLayers == null ? BlockModelRenderState.EMPTY_TINTS : state.tintLayers.toIntArray();
+        PotModelHelper.submitQuads(
+            poseStack,
+            output,
+            state.regularQuads, state.patternQuads,
+            tintLayers,
+            context.packedLight(),
+            breakingOverlay == null ? OverlayTexture.NO_OVERLAY : breakingOverlay.progress(),
+            0
+        );
 
         poseStack.popPose();
     }
 
     public static class State {
-        private DecoratedPotBlockEntity.WobbleStyle wobbleStyle;
-        private float wobble;
-        private Direction facing;
-        private final BlockModelRenderState blockRenderState = new BlockModelRenderState();
+        public DecoratedPotBlockEntity.WobbleStyle wobbleStyle = DecoratedPotBlockEntity.WobbleStyle.POSITIVE;
+        public float wobble;
+        public Direction facing;
+        public final List<BakedQuad> regularQuads = new ArrayList<>(), patternQuads = new ArrayList<>(4);
+        public IntList tintLayers;
     }
 }

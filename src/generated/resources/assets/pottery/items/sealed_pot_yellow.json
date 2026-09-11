@@ -1,6 +1,9 @@
 {
   "model": {
-    "model": "pottery:block/sealed_pot/sealed_pot_yellow",
-    "type": "pottery:decorated_pot"
+    "base": "pottery:block/sealed_pot/sealed_pot_yellow",
+    "model": {
+      "type": "pottery:decorated_pot"
+    },
+    "type": "minecraft:special"
   }
 }

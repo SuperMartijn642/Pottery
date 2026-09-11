@@ -9,7 +9,7 @@ import com.supermartijn642.pottery.content.PotColor;
 import com.supermartijn642.pottery.content.PotType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 
 import javax.imageio.ImageIO;
@@ -24,6 +24,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created 27/11/2023 by SuperMartijn642
@@ -60,9 +61,13 @@ public class PotteryTextureGenerator extends ResourceGenerator {
         for(PotColor color : PotColor.values()){
             if(color == PotColor.BLANK)
                 continue;
-            BuiltInRegistries.DECORATED_POT_PATTERN.listElements()
-                .filter(holder -> holder.key().identifier().getNamespace().equals("minecraft"))
-                .map(holder -> holder.value().assetId().withPrefix("entity/decorated_pot/"))
+            Stream.concat(
+                    ResourceGenerator.registryAccess.lookupOrThrow(Registries.DECORATED_POT_PATTERN).listElements()
+                        .filter(holder -> holder.key().identifier().getNamespace().equals("minecraft"))
+                        .map(holder -> holder.value().assetId()),
+                    Stream.of(Identifier.withDefaultNamespace("decorated_pot_side"))
+                )
+                .map(id -> id.withPrefix("entity/decorated_pot/"))
                 .forEach(texture -> {
                     String to = "patterns/" + color.getIdentifier() + "/" + texture.getPath().substring(texture.getPath().lastIndexOf('/') + 1);
                     this.hueShifts.add(Triple.of(texture, to, color));
