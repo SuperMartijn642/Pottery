@@ -2,34 +2,30 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
+      "rolls": 1,
       "entries": [
         {
           "children": [
             {
               "name": "minecraft:sherds",
-              "conditions": [
-                {
-                  "block": "pottery:wide_pot_gray",
-                  "properties": {
-                    "cracked": "true"
-                  },
-                  "condition": "minecraft:block_state_property"
-                }
-              ],
+              "condition": {
+                "blocks": "pottery:wide_pot_gray",
+                "state": {
+                  "cracked": "true"
+                },
+                "type": "minecraft:match_block"
+              },
               "type": "minecraft:dynamic"
             },
             {
               "name": "pottery:wide_pot_gray",
-              "functions": [
-                {
-                  "source": "block_entity",
-                  "include": [
-                    "minecraft:pot_decorations"
-                  ],
-                  "function": "minecraft:copy_components"
-                }
-              ],
+              "modifier": {
+                "source": "block_entity",
+                "include": [
+                  "minecraft:pot_decorations"
+                ],
+                "type": "minecraft:copy_components"
+              },
               "type": "minecraft:item"
             }
           ],

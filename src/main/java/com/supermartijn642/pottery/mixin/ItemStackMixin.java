@@ -24,11 +24,11 @@ import java.util.function.Consumer;
 public class ItemStackMixin {
 
     @Inject(
-        method = "addToTooltip",
+        method = "addToTooltip(Lnet/minecraft/core/component/DataComponentType;Lnet/minecraft/world/item/component/TooltipProvider$Getter;Lnet/minecraft/world/item/Item$TooltipContext;Lnet/minecraft/world/item/component/TooltipDisplay;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V",
         at = @At("HEAD"),
         cancellable = true
     )
-    public void addToTooltip(DataComponentType<?> componentType, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag, CallbackInfo ci) {
+    public void addToTooltip(DataComponentType<?> componentType, TooltipProvider.Getter<?> tooltipGetter, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> consumer, TooltipFlag flag, CallbackInfo ci){
         //noinspection DataFlowIssue,ConstantValue
         if(componentType == DataComponents.POT_DECORATIONS
             && ((ItemStack)(Object)this).getItem() instanceof BlockItem item && item.getBlock() instanceof PotBlock)

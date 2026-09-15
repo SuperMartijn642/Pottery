@@ -1,6 +1,9 @@
 {
   "model": {
-    "model": "pottery:block/default_pot/default_pot_pink",
-    "type": "pottery:decorated_pot"
+    "base": "pottery:block/default_pot/default_pot_pink",
+    "model": {
+      "type": "pottery:decorated_pot"
+    },
+    "type": "minecraft:special"
   }
 }

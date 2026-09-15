@@ -7,24 +7,27 @@ import com.supermartijn642.core.block.EntityHoldingBlock;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Prediction;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -72,7 +75,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
 
     public PotBlock(PotType type, PotColor color){
         //noinspection deprecation
-        super(false, BlockProperties.create().mapColor(MapColor.NONE).destroyTime(0).explosionResistance(0).noOcclusion().toUnderlying().pushReaction(PushReaction.DESTROY));
+        super(false, BlockProperties.create().mapColor(MapColor.NONE).destroyTime(0).explosionResistance(0).noOcclusion().toUnderlying().pushReaction(PushReaction.POPPED));
         this.type = type;
         this.color = color;
 
@@ -138,13 +141,13 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
         if(hitSide.getAxis().isHorizontal()){
             if(stack.is(ItemTags.DECORATED_POT_INGREDIENTS) && level.getBlockEntity(pos) instanceof PotBlockEntity entity){
                 PotDecorations decorations = entity.getDecorations();
-                Optional<Item> oldItem = DecorationUtils.getDecorationItem(decorations, state.getValue(HORIZONTAL_FACING), hitSide);
-                if(stack.is(oldItem.orElse(Items.BRICK)))
+                Optional<ItemStackTemplate> oldItem = DecorationUtils.getDecorationItem(decorations, state.getValue(HORIZONTAL_FACING), hitSide);
+                if(stack.is(oldItem.map(ItemStackTemplate::item).map(Holder::value).orElse(Items.BRICK)))
                     return InteractionFeedback.CONSUME;
 
                 if(!level.isClientSide()){
                     // Update the decorations
-                    PotDecorations newDecorations = DecorationUtils.setDecorationItem(decorations, state.getValue(HORIZONTAL_FACING), hitSide, Optional.of(stack.getItem()));
+                    PotDecorations newDecorations = DecorationUtils.setDecorationItem(decorations, state.getValue(HORIZONTAL_FACING), hitSide, Optional.of(ItemStackTemplate.fromNonEmptyStack(stack)));
                     entity.updateDecorations(newDecorations);
                     if(!player.isCreative()){
                         // Decrease the held stack size by 1
@@ -152,7 +155,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
                         stack.shrink(1);
                         player.setItemInHand(hand, stack);
                         // Re-add the previous item
-                        player.getInventory().placeItemBackInInventory(oldItem.orElse(Items.BRICK).getDefaultInstance());
+                        player.getInventory().placeItemBackInInventory(oldItem.map(ItemStackTemplate::create).orElse(Items.BRICK.getDefaultInstance()), Prediction.SERVER_ONLY);
                     }
                 }
                 return InteractionFeedback.SUCCESS;
@@ -222,7 +225,11 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder){
         if(builder.getOptionalParameter(LootContextParams.BLOCK_ENTITY) instanceof PotBlockEntity entity)
             builder.withDynamicDrop(DecoratedPotBlock.SHERDS_DYNAMIC_DROP_ID, consumer -> {
-                entity.getDecorations().ordered().stream().map(Item::getDefaultInstance).forEach(consumer);
+                PotDecorations decorations = entity.getDecorations();
+                decorations.back().map(ItemStackTemplate::create).ifPresent(consumer);
+                decorations.left().map(ItemStackTemplate::create).ifPresent(consumer);
+                decorations.right().map(ItemStackTemplate::create).ifPresent(consumer);
+                decorations.front().map(ItemStackTemplate::create).ifPresent(consumer);
                 for(int i = 0; i < this.type.getExtraBricks(); i++)
                     consumer.accept(Items.BRICK.getDefaultInstance());
             });
@@ -256,11 +263,11 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
         if(decorations != null && !decorations.equals(PotDecorations.EMPTY)){
             info.accept(CommonComponents.EMPTY);
             info.accept(TextComponents.string("Patterns:").color(ChatFormatting.GRAY).get());
-            ItemStack brick = Items.BRICK.getDefaultInstance();
-            info.accept(TextComponents.string(" Front: ").color(ChatFormatting.DARK_GRAY).append(decorations.front().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.front().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Left: ").color(ChatFormatting.DARK_GRAY).append(decorations.left().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.left().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Right: ").color(ChatFormatting.DARK_GRAY).append(decorations.right().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.right().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
-            info.accept(TextComponents.string(" Back: ").color(ChatFormatting.DARK_GRAY).append(decorations.back().map(Item::getDefaultInstance).orElse(brick).getItemName().plainCopy().withStyle(decorations.back().isEmpty() ? ChatFormatting.GRAY : ChatFormatting.GOLD)).get());
+            MutableComponent brick = TextComponents.fromTextComponent(Items.BRICK.getDefaultInstance().getItemName()).color(ChatFormatting.GRAY).get();
+            info.accept(TextComponents.string(" Front: ").color(ChatFormatting.DARK_GRAY).append(decorations.front().map(ItemStackTemplate::create).map(s -> s.getItemName().plainCopy().withStyle(ChatFormatting.GOLD)).orElse(brick)).get());
+            info.accept(TextComponents.string(" Left: ").color(ChatFormatting.DARK_GRAY).append(decorations.left().map(ItemStackTemplate::create).map(s -> s.getItemName().plainCopy().withStyle(ChatFormatting.GOLD)).orElse(brick)).get());
+            info.accept(TextComponents.string(" Right: ").color(ChatFormatting.DARK_GRAY).append(decorations.right().map(ItemStackTemplate::create).map(s -> s.getItemName().plainCopy().withStyle(ChatFormatting.GOLD)).orElse(brick)).get());
+            info.accept(TextComponents.string(" Back: ").color(ChatFormatting.DARK_GRAY).append(decorations.back().map(ItemStackTemplate::create).map(s -> s.getItemName().plainCopy().withStyle(ChatFormatting.GOLD)).orElse(brick)).get());
         }
     }
 
@@ -274,7 +281,7 @@ public class PotBlock extends BaseBlock implements EntityHoldingBlock, SimpleWat
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult blockHitResult, Projectile projectile){
         BlockPos pos = blockHitResult.getBlockPos();
-        if(level instanceof ServerLevel && projectile.mayInteract((ServerLevel)level, pos) && projectile.mayBreak((ServerLevel)level)){
+        if(level instanceof ServerLevel && projectile.mayInteract((ServerLevel)level, pos) && projectile.mayBreak((ServerLevel)level, pos)){
             level.setBlock(pos, state.setValue(CRACKED, true), 4);
             level.destroyBlock(pos, true, projectile);
         }
